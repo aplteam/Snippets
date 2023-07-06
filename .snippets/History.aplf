@@ -1,0 +1,3 @@
+       r←History
+       ⍝ Returns all "leading" comments in this function as a vector of characters vectors
+       r←↑{⍵↓⍨+/∧\∧⌿(↑⍵)=' '}{⍵↓⍨⍵⍳'⍝'}¨{⍵/⍨'⍝'=⊃¨⍵}{⍵↓⍨+/∧\(↑⍵)=' '}¨1↓⎕NR⊃⎕SI
