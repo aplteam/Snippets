@@ -4,12 +4,11 @@
      M←⎕SE.MakeHelpers
      C←##.CiderConfig
      cfg←M.GetPackageCfg C.HOME
-     M.FetchLaterUserCommand cfg C('[MyUCMDs]Snippets')
+     M.FetchLaterUserCommand cfg C('[MyUCMDs]')
      parms←⎕SE.Tatin.CreateBuildParms C.HOME
      parms.version←M.CompileVersionNumberPattern cfg
      parms.targetPath←C.CIDER.distributionFolder
      M.RecreateFolder C.HOME,'/',C.CIDER.distributionFolder
-
      zipFilename←⎕SE.Tatin.BuildPackage parms
      ⎕←'*** New version build successfully:',M.CR,'   ',zipFilename
      :If 1 M.YesOrNo'Install new version in MyUCMDs?'

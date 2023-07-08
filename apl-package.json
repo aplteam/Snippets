@@ -16,8 +16,8 @@
   os_mac: 1,
   os_win: 1,
   project_url: "https://github.com/aplteam/Snippets",
-  source: "APLSource",
+  source: "APLSource/Snippets",
   tags: "code-snippets",
   userCommandScript: "APLSource/Snippets_UC.dyalog",
-  version: "0.1.0+37",
+  version: "0.1.1+50",
 }

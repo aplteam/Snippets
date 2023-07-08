@@ -131,7 +131,7 @@
     ∇
 
     ∇ r←Version_
-      r←'0.1.0'
+      r←'0.1.1'
     ∇
 
     ∇ msg←Edit_ ns;opCode;name;filename;ref;body;body2

@@ -37,7 +37,7 @@ This projects offers the Dyalog APL user command `]Snippets` which allows you to
  Make            "Make" a new version of this project                                                            
  Split           (≠⊆⊢)                                                                                           
  Version         Fetches the version number from the package config file                                         
-      ]SNIPPETS.Show Ass*
+      ]SNIPPETS.View Ass*
  Assert←{⍺←'' ⋄ (,1)≡,⍵:r←1 ⋄ ⎕ML←1 ⋄ ⍺ ⎕SIGNAL 1↓(⊃∊⍵),11} ⍝ Takes a Boolean as ⍵ and and returns it if true but signals an error otherwise 
       ]SNIPPETS.Fix Ass*
 "Assert" fixed in #
@@ -64,7 +64,7 @@ Tell something
   Help      Provide a help page explaining the principles                 
   List      List all saved snippets                                        
   Save      Save a function or operator or script or a piece of code as a snippet            
-  Show      Print a snippet to the session, by default without line numbers
+  View      Put a snippet into ⎕ED
   Version   Return the version number                                     
 ```
 
