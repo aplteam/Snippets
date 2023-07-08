@@ -67,3 +67,14 @@ Tell something
   Show      Print a snippet to the session, by default without line numbers
   Version   Return the version number                                     
 ```
+
+
+## Installation
+
+`Snippets` can be installed as a Tatin package:
+
+```
+]Tatin.InstallPackages [tatin]Snippets [MyUCMDs]
+```
+
+This will make the user commands of `Snippets` available. Note that `Snippets` does not offer an API.

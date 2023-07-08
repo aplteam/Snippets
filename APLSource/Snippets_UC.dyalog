@@ -1,7 +1,7 @@
-﻿:Class Snippets_UC
+:Class Snippets_UC
 ⍝ User Command class for the "Snippets" manager
 ⍝ Kai Jaeger
-⍝ 2023-07-06
+⍝ 2023-07-08
 
     ⎕IO←1 ⋄ ⎕ML←1
 
