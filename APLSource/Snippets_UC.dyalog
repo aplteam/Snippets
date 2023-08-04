@@ -1,4 +1,4 @@
-﻿:Class Snippets_UC
+:Class Snippets_UC
 ⍝ User Command class for the "Snippets" manager
 ⍝ Kai Jaeger
 ⍝ 2023-08-04
@@ -131,7 +131,7 @@
     ∇
 
     ∇ r←Version_
-      r←'0.1.2'
+      r←'0.2.0'
     ∇
 
     ∇ msg←Edit_ ns;opCode;name;filename;ref;body;body2
