@@ -7,9 +7,9 @@
  ⎕SE.CommTools.Select_Choices←1 2⍴'WhereToFix@' 2
  ⎕SE.CommTools.YesOrNo_Answers←1 2⍴'DifferentName@' 'Y'
  res←∆UCMD'Fix ''Initialize_tatin_package'''
- →T.GoToTidyUp'Function "Initialize" fixed in #.Snippets.TestCases'≢res
+ →T.GoToTidyUp'Function "Initialize" fixed in #.Snippets.TestCases; Added: #.Snippets.TestCases.Initialize'≢res
  →T.GoToTidyUp 3≠⎕NC'Initialize'
- ⎕EX'Initialize'
+ ⎕SE.Link.Expunge'Initialize'
 
  Assert 0=#.⎕NC'Initialize' ⍝ Must not exist of course
  ⎕SE.CommTools.Select_Choices←1 2⍴'WhereToFix@' 1
@@ -22,7 +22,7 @@
  R←T._OK
 
 ∆TidyUp:
- ⎕EX'Initialize'
  #.⎕EX'Initialize'
+ ⎕SE.Link.Expunge'Initialize'
  ⎕SE.CommTools.Cleanup
 ⍝Done

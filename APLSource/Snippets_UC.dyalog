@@ -239,7 +239,7 @@
       :EndIf
     ∇
 
-    ∇ msg←Fix_ ns;folder;filenames;snippetNames;name;ind;index;body;q;buff;parent;qdmx;isVars;extension
+    ∇ msg←Fix_ ns;folder;filenames;snippetNames;name;ind;index;body;q;buff;parent;qdmx;isVars;extension;res
       (filenames snippetNames ind name msg)←0 CollectSnippetInfo'to fix in the workspace'({0≡⍵:'' ⋄ ⍵}ns._1)
       parent←''ns.Switch'target'
       :If 0<≢name
@@ -292,7 +292,10 @@
               :Else
                   msg←'Attempt to fix "',name,'" caused an error in line ',⍕buff
               :EndIf
-              {}⎕SE.Link.Add(⍕parent),'.',name
+              res←⎕SE.Link.Add(⍕parent),'.',name
+              :If 'Added:'{⍺≡(≢⍺)↑⍵}res
+                  msg,←'; ',res
+              :EndIf
           :ElseIf isVars
               ⍎(⍕parent),'.',name,'←body'
               msg←'Variable "',name,'" assigned in "',(⍕parent),'"'
