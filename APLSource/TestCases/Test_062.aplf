@@ -1,0 +1,26 @@
+ R←Test_062(stopFlag batchFlag);⎕TRAP;res;res2
+⍝ ]Snippets.Fix on a Script
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ Assert 0=⎕NC'QuadVars' ⍝ Must not exist of course
+ ⎕SE.CommTools.Select_Choices←1 2⍴'WhereToFix@' 2
+ res←∆UCMD'Fix ''QuadVars'''
+ →T.GoToTidyUp 'Script "QuadVars" fixed in #.Snippets.TestCases'≢res
+ →T.GoToTidyUp 9.4≠⎕NC⊂'QuadVars'
+ ⎕EX'QuadVars'
+
+ Assert 0=#.⎕NC'QuadVars' ⍝ Must not exist of course
+ ⎕SE.CommTools.Select_Choices←1 2⍴'WhereToFix@' 1
+ res←∆UCMD'Fix ''QuadVars'''
+ →T.GoToTidyUp 'Script "QuadVars" fixed in #'≢res
+ →T.GoToTidyUp 0≠⎕NC'QuadVars'
+ →T.GoToTidyUp 9.4≠#.⎕NC⊂'QuadVars'
+
+ R←T._OK
+
+∆TidyUp:
+ ⎕EX'QuadVars'
+ #.⎕EX'QuadVars'
+ ⎕SE.CommTools.Cleanup
+⍝Done

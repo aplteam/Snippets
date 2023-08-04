@@ -1,4 +1,4 @@
-:Class Snippets_UC
+﻿:Class Snippets_UC
 ⍝ User Command class for the "Snippets" manager
 ⍝ Kai Jaeger
 ⍝ 2023-08-04
@@ -239,13 +239,13 @@
       :EndIf
     ∇
 
-    ∇ msg←Fix_ ns;folder;filenames;snippetNames;name;ind;index;body;q;buff;parent;qdmx
+    ∇ msg←Fix_ ns;folder;filenames;snippetNames;name;ind;index;body;q;buff;parent;qdmx;isVars;extension
       (filenames snippetNames ind name msg)←0 CollectSnippetInfo'to fix in the workspace'({0≡⍵:'' ⋄ ⍵}ns._1)
       parent←''ns.Switch'target'
       :If 0<≢name
           :If 0=≢parent
               :If (,'#')≢parent←⊃{⍵/⍨~'['∊¨⍵}{⍵↓⍨+/∧\'⎕se'∘≡¨3↑¨⎕C ⍵}⎕NSI
-                  index←'Where do you want to fix it:'SN.CommTools.Select(⊂,'#'),⊂parent
+                  index←'WhereToFix@Where do you want to fix it:'SN.CommTools.Select(⊂,'#'),⊂parent
                   :If 0=≢index
                       msg←'Cancelled by user' ⋄ →0
                   :EndIf
@@ -257,13 +257,22 @@
               parent←⍎parent
           :EndIf
           body←GetCodeFromFile ind⊃filenames
-          body←{2=⍴⍴⍵:⍵ ⋄ ,⊆⍵}body
-          :Trap 0
-              name←GetNameFromBody body
+          extension←3⊃⎕NPARTS ind⊃filenames
+          :If isVars←'.apla'≡extension
+              name←2⊃⎕NPARTS ind⊃filenames
           :Else
-              qdmx←⎕DMX
-              qdmx.EM ⎕SIGNAL qdmx.EN
-          :EndTrap
+              body←{2=⍴⍴⍵:⍵ ⋄ ,⊆⍵}body
+              :Trap 0
+                  name←GetNameFromBody body
+              :Else
+                  qdmx←⎕DMX
+                  qdmx.EM ⎕SIGNAL qdmx.EN
+              :EndTrap
+              :If name≢2⊃⎕NPARTS ind⊃filenames
+              :AndIf ~SN.CommTools.YesOrNo'DifferentName@Will be fixed as "',name,'"; you okay with that?'
+                  msg←'Cancelled by user' ⋄ →0
+              :EndIf
+          :EndIf
           :Select ⊃parent.⎕NC name
           :Case 0
               ⍝ Name is okay and not in use, nothing to do
@@ -276,17 +285,21 @@
               :EndIf
               parent.⎕EX name
           :EndSelect
-          :If (⊂3⊃⎕NPARTS ind⊃filenames)∊'.aplf' '.aplo'
+          :If (⊂extension)∊'.aplf' '.aplo'
               buff←parent.⎕FX body
               :If ' '=1↑0⍴∊buff
-                  msg←'"',name,'" fixed in ',⍕parent
+                  msg←'Function "',name,'" fixed in ',⍕parent
               :Else
                   msg←'Attempt to fix "',name,'" caused an error in line ',⍕buff
               :EndIf
               {}⎕SE.Link.Add(⍕parent),'.',name
+          :ElseIf isVars
+              ⍎(⍕parent),'.',name,'←body'
+              msg←'Variable "',name,'" assigned in "',(⍕parent),'"'
           :Else
               :Trap 0
                   {}parent.⎕FIX body
+                  msg←'Script "',name,'" fixed in ',⍕parent
               :Else
                   msg←'Attempt to fix "',name,'" caused an error'
               :EndTrap
@@ -361,6 +374,9 @@
           session←ns.Switch'session'
           :If session
               r←⊃SN.FilesAndDirs.NGET filename 1
+              :If '.apla'≡3⊃⎕NPARTS filename
+                  r←⎕SE.Dyalog.Array.Deserialise r
+              :EndIf
               r←⍪↓DLB↑r
               r←(⊂(⎕PW-5)⍴'-')⍪r
           :Else
