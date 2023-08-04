@@ -1,7 +1,7 @@
-:Class Snippets_UC
+﻿:Class Snippets_UC
 ⍝ User Command class for the "Snippets" manager
 ⍝ Kai Jaeger
-⍝ 2023-07-08
+⍝ 2023-08-04
 
     ⎕IO←1 ⋄ ⎕ML←1
 
@@ -131,7 +131,7 @@
     ∇
 
     ∇ r←Version_
-      r←'0.1.1'
+      r←'0.1.2'
     ∇
 
     ∇ msg←Edit_ ns;opCode;name;filename;ref;body;body2
@@ -170,14 +170,16 @@
               ('Object not found',name)Assert 0<≢parent
           :Else
               parent←⊃{⍵/⍨~'['∊¨⍵}{⍵↓⍨+/∧\'⎕se'∘≡¨3↑¨⎕C ⍵}⎕NSI
-              nc←parent.⎕NC name
+              nc←(⍎parent).⎕NC name
               :If nc=¯1
                   msg←'Invalid snippet name' ⋄ →0
               :ElseIf nc=0
                   msg←'Name has no value?!' ⋄ →0
               :EndIf
           :EndIf
-          ('Parent object not found: ',parent)Assert 9=⎕NC parent
+          :If ~(⊂,1 ⎕C parent)∊,¨'#' '⎕SE'
+              ('Parent object not found: ',parent)Assert 9=⎕NC parent
+          :EndIf
           parent←⍎parent
           :Select ⊃parent.⎕NC name
           :Case ¯1
@@ -185,7 +187,8 @@
           :Case 0
               ('<',name,'> not found in ',⍕parent)⎕SIGNAL 6
           :Case 2
-              ∘∘∘ ⋄ body←⊆ns._1
+              body←⍎ns._1
+              body←⎕SE.Dyalog.Array.Serialise body
           :Case 9
               body←⎕SRC parent⍎name
           :CaseList 3 4
@@ -198,8 +201,8 @@
           msg←'No name was specified, and the clipboard does not contain code?!'
       :Else
           nc←parent.⎕NC name
-          :If nc∊3 4
-              extension←'.aplf' '.aplo'[3 4⍳nc]
+          :If nc∊2 3 4
+              extension←(2 3 4⍳nc)⊃'.apla' '.aplf' '.aplo'
           :Else
               nc←parent.⎕NC⊂name
               extension←(9.1 9.4 9.5⍳nc)⊃'.apln' '.aplc' '.apli'
@@ -362,7 +365,11 @@
               r←(⊂(⎕PW-5)⍴'-')⍪r
           :Else
               (name body)←2↑GetNameAndBody filename
-              ref←EstablishCodeInNamespace body
+              :If '.apla'≡3⊃⎕NPARTS filename
+                  ref←name EstablishVarsInNamespace body
+              :Else
+                  ref←EstablishCodeInNamespace body
+              :EndIf
               ref.{{}(⎕ED⍠('ReadOnly' 1)&⍵)}name
           :EndIf
       :EndIf
@@ -550,16 +557,26 @@
     ∇ (name body)←GetNameAndBody filename;body
       body←⊃⎕NGET filename 1
       body←(-+/∧\0=⌽≢¨body)↓body
-      name←GetNameFromBody body
+      :If '.apla'≡3⊃⎕NPARTS filename
+          name←2⊃⎕NPARTS filename ⍝ For a variable the filename defines the name
+          body←⎕SE.Dyalog.Array.Deserialise body
+      :Else
+          name←GetNameFromBody body
+      :EndIf
     ∇
 
     ∇ ref←EstablishCodeInNamespace body
       ref←⎕NS''
       :If ∨/':class' ':namespace'{⍺≡(≢⍺)↑⍵}¨⊂⎕C' '~⍨⊃body
           ref.⎕FIX body
-      :Else
+      :ElseIf
           ref.⎕FX body
       :EndIf
+    ∇
+
+    ∇ ref←name EstablishVarsInNamespace value
+      ref←⎕NS''
+      ⍎'ref.',name,'←value'
     ∇
 
     ∇ body←GetCodeFromWS(ref name);buff
@@ -573,7 +590,9 @@
 
     ∇ body←GetCodeFromFile filename;buff
       body←⊃SN.FilesAndDirs.NGET filename 1
-      :If 1=≢body
+      :If '.apla'≡3⊃⎕NPARTS filename
+          body←⎕SE.Dyalog.Array.Deserialise body
+      :ElseIf 1=≢body
       :AndIf (⊂3⊃⎕NPARTS filename)∊'.aplf' '.aplo' '.code'
           buff←{⍵{⍵\⍵/⍺}{~⍵∨≠\⍵}''''=⍵}⊃body ⍝ Wipe out anything quoted
           body←⊂(¯1+buff⍳'⍝')↑⊃body
