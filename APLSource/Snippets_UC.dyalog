@@ -187,7 +187,7 @@
           :Case 0
               ('<',name,'> not found in ',⍕parent)⎕SIGNAL 6
           :Case 2
-              body←⍎ns._1
+              body←parent⍎ns._1
               body←⎕SE.Dyalog.Array.Serialise body
           :Case 9
               body←⎕SRC parent⍎name
@@ -200,7 +200,11 @@
       :If 0=≢body
           msg←'No name was specified, and the clipboard does not contain code?!'
       :Else
-          nc←parent.⎕NC name
+          :If 2=⎕NC'parent'
+              nc←parent.⎕NC name
+          :Else
+              nc←2
+          :EndIf
           :If nc∊2 3 4
               extension←(2 3 4⍳nc)⊃'.apla' '.aplf' '.aplo'
           :Else
