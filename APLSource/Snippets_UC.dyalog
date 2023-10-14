@@ -1,8 +1,8 @@
-﻿:Class Snippets_UC
-⍝ User Command class for the "Snippets" manager
-⍝ Kai Jaeger
-⍝ 2023-08-04
-
+:Class Snippets_UC
+ ⍝ User Command class for the "Snippets" manager
+ ⍝ 2023-10-13
+ ⍝ Kai Jaeger
+    
     ⎕IO←1 ⋄ ⎕ML←1
 
     Extensions←'.aplf' '.aplo' '.aplc' '.apln' '.apli' '.dyalog' '.code'
@@ -131,7 +131,7 @@
     ∇
 
     ∇ r←Version_
-      r←'0.2.0'
+      r←'0.3.1'
     ∇
 
     ∇ msg←Edit_ ns;opCode;name;filename;ref;body;body2
@@ -245,74 +245,76 @@
 
     ∇ msg←Fix_ ns;folder;filenames;snippetNames;name;ind;index;body;q;buff;parent;qdmx;isVars;extension;res
       (filenames snippetNames ind name msg)←0 CollectSnippetInfo'to fix in the workspace'({0≡⍵:'' ⋄ ⍵}ns._1)
-      parent←''ns.Switch'target'
-      :If 0<≢name
-          :If 0=≢parent
-              :If (,'#')≢parent←⊃{⍵/⍨~'['∊¨⍵}{⍵↓⍨+/∧\'⎕se'∘≡¨3↑¨⎕C ⍵}⎕NSI
-                  index←'WhereToFix@Where do you want to fix it:'SN.CommTools.Select(⊂,'#'),⊂parent
-                  :If 0=≢index
+      :If 'Cancelled by user'≢msg
+          parent←''ns.Switch'target'
+          :If 0<≢name
+              :If 0=≢parent
+                  :If (,'#')≢parent←⊃{⍵/⍨~'['∊¨⍵}{⍵↓⍨+/∧\'⎕se'∘≡¨3↑¨⎕C ⍵}⎕NSI
+                      index←'WhereToFix@Where do you want to fix it:'SN.CommTools.Select(⊂,'#'),⊂parent
+                      :If 0=≢index
+                          msg←'Cancelled by user' ⋄ →0
+                      :EndIf
+                      parent←⍎index⊃'#'parent
+                  :Else
+                      parent←#
+                  :EndIf
+              :Else
+                  parent←⍎parent
+              :EndIf
+              body←GetCodeFromFile ind⊃filenames
+              extension←3⊃⎕NPARTS ind⊃filenames
+              :If isVars←'.apla'≡extension
+                  name←2⊃⎕NPARTS ind⊃filenames
+              :Else
+                  body←{2=⍴⍴⍵:⍵ ⋄ ,⊆⍵}body
+                  :Trap 0
+                      name←GetNameFromBody body
+                  :Else
+                      qdmx←⎕DMX
+                      qdmx.EM ⎕SIGNAL qdmx.EN
+                  :EndTrap
+                  :If name≢2⊃⎕NPARTS ind⊃filenames
+                  :AndIf ~SN.CommTools.YesOrNo'DifferentName@Will be fixed as "',name,'"; you okay with that?'
                       msg←'Cancelled by user' ⋄ →0
                   :EndIf
-                  parent←⍎index⊃'#'parent
-              :Else
-                  parent←#
               :EndIf
-          :Else
-              parent←⍎parent
-          :EndIf
-          body←GetCodeFromFile ind⊃filenames
-          extension←3⊃⎕NPARTS ind⊃filenames
-          :If isVars←'.apla'≡extension
-              name←2⊃⎕NPARTS ind⊃filenames
-          :Else
-              body←{2=⍴⍴⍵:⍵ ⋄ ,⊆⍵}body
-              :Trap 0
-                  name←GetNameFromBody body
-              :Else
-                  qdmx←⎕DMX
-                  qdmx.EM ⎕SIGNAL qdmx.EN
-              :EndTrap
-              :If name≢2⊃⎕NPARTS ind⊃filenames
-              :AndIf ~SN.CommTools.YesOrNo'DifferentName@Will be fixed as "',name,'"; you okay with that?'
-                  msg←'Cancelled by user' ⋄ →0
-              :EndIf
-          :EndIf
-          :Select ⊃parent.⎕NC name
-          :Case 0
+              :Select ⊃parent.⎕NC name
+              :Case 0
               ⍝ Name is okay and not in use, nothing to do
-          :Case ¯1
-              ('Invalid name: ',name)⎕SIGNAL 11
-          :Else
-              q←'"',name,'" already used in ',(⍕parent),'; overwrite?'
-              :If 0=SN.CommTools.YesOrNo q
-                  msg←'Cancelled by user' ⋄ →0
-              :EndIf
-              parent.⎕EX name
-          :EndSelect
-          :If (⊂extension)∊'.aplf' '.aplo'
-              buff←parent.⎕FX body
-              :If ' '=1↑0⍴∊buff
-                  msg←'Function "',name,'" fixed in ',⍕parent
+              :Case ¯1
+                  ('Invalid name: ',name)⎕SIGNAL 11
               :Else
-                  msg←'Attempt to fix "',name,'" caused an error in line ',⍕buff
-              :EndIf
-              res←⎕SE.Link.Add(⍕parent),'.',name
-              :If 'Added:'{⍺≡(≢⍺)↑⍵}res
-                  msg,←'; ',res
-              :EndIf
-          :ElseIf isVars
-              ⍎(⍕parent),'.',name,'←body'
-              msg←'Variable "',name,'" assigned in "',(⍕parent),'"'
-          :Else
-              :Trap 0
-                  {}parent.⎕FIX body
-                  msg←'Script "',name,'" fixed in ',⍕parent
+                  q←'"',name,'" already used in ',(⍕parent),'; overwrite?'
+                  :If 0=SN.CommTools.YesOrNo q
+                      msg←'Cancelled by user' ⋄ →0
+                  :EndIf
+                  parent.⎕EX name
+              :EndSelect
+              :If (⊂extension)∊'.aplf' '.aplo'
+                  buff←parent.⎕FX body
+                  :If ' '=1↑0⍴∊buff
+                      msg←'Function "',name,'" fixed in ',⍕parent
+                  :Else
+                      msg←'Attempt to fix "',name,'" caused an error in line ',⍕buff
+                  :EndIf
+                  res←⎕SE.Link.Add(⍕parent),'.',name
+                  :If 'Added:'{⍺≡(≢⍺)↑⍵}res
+                      msg,←'; ',res
+                  :EndIf
+              :ElseIf isVars
+                  ⍎(⍕parent),'.',name,'←body'
+                  msg←'Variable "',name,'" assigned in "',(⍕parent),'"'
               :Else
-                  msg←'Attempt to fix "',name,'" caused an error'
-              :EndTrap
+                  :Trap 0
+                      {}parent.⎕FIX body
+                      msg←'Script "',name,'" fixed in ',⍕parent
+                  :Else
+                      msg←'Attempt to fix "',name,'" caused an error'
+                  :EndTrap
+              :EndIf
+          :Else
+              msg←'No such (fixable) snippet found'
           :EndIf
-      :Else
-          msg←'No such (fixable) snippet found'
       :EndIf
     ∇
 
@@ -664,7 +666,7 @@
           ⍵↓⍨+/∧\' '=⍵
       }
 
-    ∇ (filenames snippetNames ind name msg)←{all}CollectSnippetInfo(caption txt);folder;ind2
+    ∇ (filenames snippetNames ind name msg)←{all}CollectSnippetInfo(caption txt);folder;ind2;bool;list2
       all←{0<⎕NC ⍵:⍎⍵ ⋄ 1}'all'
       filenames←snippetNames←msg←''
       folder←GetHomeFolder
@@ -672,8 +674,11 @@
       :If 0=≢filenames
           msg←'No ',((~all)/'fixable'),' snippets found' ⋄ →0
       :EndIf
-      :If ~all
-          filenames←('.code'∘≢¨3⊃∘⎕NPARTS¨filenames)/filenames
+      :If all
+          bool←1
+      :Else
+          bool←'.code'∘≢¨3⊃∘⎕NPARTS¨filenames
+          filenames←bool/filenames
       :EndIf
       :If 0=≢filenames
           msg←'No ',((~all)/'fixable'),' snippets found' ⋄ →0
@@ -691,7 +696,8 @@
           :If 1=≢ind
               name←ind⊃snippetNames
           :Else
-              ind2←('Select snippet ',caption)SN.CommTools.Select 1↓↓List_ ns
+              list2←1↓↓(1,bool)⌿List_ ns
+              ind2←('Select snippet ',caption)SN.CommTools.Select list2
               :If 0=≢ind2
                   name←''
                   msg←'Cancelled by user'
