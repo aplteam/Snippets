@@ -1,8 +1,8 @@
-:Class Snippets_UC
- ⍝ User Command class for the "Snippets" manager
- ⍝ 2023-10-13
- ⍝ Kai Jaeger
-    
+﻿:Class Snippets_UC
+⍝ User Command class for the "Snippets" manager
+⍝ Kai Jaeger
+⍝ 2024-01-11
+
     ⎕IO←1 ⋄ ⎕ML←1
 
     Extensions←'.aplf' '.aplo' '.aplc' '.apln' '.apli' '.dyalog' '.code'
@@ -54,8 +54,8 @@
       r,←c
      
       c←⎕NS''
-      c.Name←'View'
-      c.Desc←'View a snippet with ⎕ED'
+      c.Name←'Show'
+      c.Desc←'Show a snippet with ⎕ED'
       c.Group←'Snippets'
       c.Parse←'1s -session'
       r,←c
@@ -104,8 +104,8 @@
           r←Delete_ Args
       :Case ⎕C'Compare'
           r←Compare_ Args
-      :Case ⎕C'View'
-          r←View_ Args
+      :Case ⎕C'Show'
+          r←Show_ Args
       :Case ⎕C'Help'
           r←Help_ Args
       :Case ⎕C'Version'
@@ -131,7 +131,7 @@
     ∇
 
     ∇ r←Version_
-      r←'0.3.1'
+      r←'0.4.0'
     ∇
 
     ∇ msg←Edit_ ns;opCode;name;filename;ref;body;body2
@@ -345,7 +345,7 @@
       list←SN.FilesAndDirs.ListFiles folder
       full←ns.Switch'full'
       :If 0<≢list
-          list2←{2⊃⎕NPARTS ⍵}¨list
+          list2←{⊃,/1↓⎕NPARTS ⍵}¨list
           name←ns._1
           :If 0≢name
               :If '*'∊name
@@ -376,9 +376,9 @@
       :EndIf
     ∇
 
-    ∇ r←View_ ns;opCode;msg;name;filename;session;ref;body
+    ∇ r←Show_ ns;opCode;msg;name;filename;session;ref;body
       r←''
-      (opCode r name filename)←'SelectSnippetForView@Please select snippet to be viewed'GetNameAndFilename ns
+      (opCode r name filename)←'SelectSnippetForView@Please select snippet to be shown with ⎕ED'GetNameAndFilename ns
       :If 1=opCode
           session←ns.Switch'session'
           :If session
@@ -431,7 +431,7 @@
           :Case ⎕C'Compare'
               r,←⊂'Compare a function, operator or script with a saved snippet'
               r,←⊂']Snippets.Compare <object-name>'
-          :Case ⎕C'View'
+          :Case ⎕C'Show'
               r,←⊂'Bring the code of a snippet into ⎕ED'
               r,←⊂']Snippets.Show [<name*>] -session'
           :Case ⎕C'Version'
@@ -512,7 +512,7 @@
               r,←⊂'* If the user command ]CompareFiles (and its API) is available this will be used to'
               r,←⊂'  carry out the comparison, otherwise two files are printed to the session.'
               r,←⊂''
-          :Case ⎕C'View'
+          :Case ⎕C'Show'
               r,←⊂'Brings the code of a given snippet into ⎕ED.'
               r,←⊂''
               r,←⊂'If a given name does not result in a match it is interpreted as "search for all that'
@@ -696,7 +696,7 @@
           :If 1=≢ind
               name←ind⊃snippetNames
           :Else
-              list2←1↓↓(1,bool)⌿List_ ns
+              list2←1↓↓bool{(1,(¯1+≢⍵)⍴⍺)⌿⍵}List_ ns
               ind2←('Select snippet ',caption)SN.CommTools.Select list2
               :If 0=≢ind2
                   name←''

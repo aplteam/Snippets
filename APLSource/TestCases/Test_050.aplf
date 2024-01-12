@@ -1,9 +1,9 @@
  R←Test_050(stopFlag batchFlag);⎕TRAP;res;res2
-⍝ ]Snippets.View
+⍝ ]Snippets.Show
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- res←∆UCMD'View Assert -session'
+ res←∆UCMD'Show Assert -session'
  →T.PassesIf∨/'Assert←'⍷∊res
 
  R←T._OK

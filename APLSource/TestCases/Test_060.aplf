@@ -4,16 +4,16 @@
  R←T._Failed
 
  Assert 0=⎕NC'Initialize' ⍝ Must not exist of course
- ⎕SE.CommTools.Select_Choices←1 2⍴'WhereToFix@' 2
- ⎕SE.CommTools.YesOrNo_Answers←1 2⍴'DifferentName@' 'Y'
+ ⎕SE.Snippets.CommTools.Select_Choices←1 2⍴'WhereToFix@' 2
+ ⎕SE.Snippets.CommTools.YesOrNo_Answers←1 2⍴'DifferentName@' 'Y'
  res←∆UCMD'Fix ''Initialize_tatin_package'''
  →T.GoToTidyUp'Function "Initialize" fixed in #.Snippets.TestCases; Added: #.Snippets.TestCases.Initialize'≢res
  →T.GoToTidyUp 3≠⎕NC'Initialize'
  ⎕SE.Link.Expunge'Initialize'
 
  Assert 0=#.⎕NC'Initialize' ⍝ Must not exist of course
- ⎕SE.CommTools.Select_Choices←1 2⍴'WhereToFix@' 1
- ⎕SE.CommTools.YesOrNo_Answers←1 2⍴'DifferentName@' 'Y'
+ ⎕se.Snippets.CommTools.Select_Choices←1 2⍴'WhereToFix@' 1
+ ⎕se.Snippets.CommTools.YesOrNo_Answers←1 2⍴'DifferentName@' 'Y'
  res←∆UCMD'Fix ''Initialize_tatin_package'''
  →T.GoToTidyUp'Function "Initialize" fixed in #'≢res
  →T.GoToTidyUp 0≠⎕NC'Initialize'
@@ -24,5 +24,5 @@
 ∆TidyUp:
  #.⎕EX'Initialize'
  ⎕SE.Link.Expunge'Initialize'
- ⎕SE.CommTools.Cleanup
+ ⎕SE.Snippets.CommTools.Cleanup
 ⍝Done

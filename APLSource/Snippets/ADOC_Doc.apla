@@ -94,5 +94,5 @@
  ''
  'Copying any snippet to the clipboard with the `]Snippets.Copy` command is only supported on Windows. '
  ''
- 'However, you can get around this on other platforms by using the command `]Snippets.View` and then copy the code (or variable) "manually". '
+ 'However, you can get around this on other platforms by using the command `]Snippets.Show` and then copy the code (or variable) "manually". '
 )
