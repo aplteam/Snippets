@@ -24,7 +24,7 @@ This certainly does not qualify as a package: there is no need for versioning or
 
 But you might use this piece of code frequently enough to make it available as a snippet, because this is not something that can easily be entered on the fly, not to mention the possibility of a typo, making it a perfect example of a snippet.
 
-This projects offers the Dyalog APL user command `]Snippets` which allows you to create, list and inspect snippets, and get them into the workspace in one way or another.
+The Dyalog APL user command `]Snippets` allows you to create, list and inspect snippets, and get them into the workspace in one way or another.
 
 
 ## Examples
@@ -64,8 +64,8 @@ Tell something
   Help      Provide a help page explaining the principles                 
   List      List all saved snippets                                        
   Save      Save a function or operator or script or a piece of code as a snippet            
+  Show      Put a snippet into ⎕ED  
   Version   Return the version number                                     
-  View      Put a snippet into ⎕ED  
 ```
 
 
@@ -78,3 +78,4 @@ Tell something
 ```
 
 This will make the user commands of `Snippets` available. Note that `Snippets` does not offer an API.
+
