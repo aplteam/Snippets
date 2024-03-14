@@ -1,0 +1,14 @@
+ r←GetComment filename;body;buff
+ body←⊃FilesAndDirs.NGET filename 1
+ :If 1=≢body
+ :AndIf (⊂3⊃⎕NPARTS filename)∊'.aplf' '.aplo' '.code'
+     buff←{⍵{⍵\⍵/⍺}{~⍵∨≠\⍵}''''=⍵}⊃body ⍝ Wipe out anything quoted
+     r←APLTreeUtils2.DLB(buff⍳'⍝')↓⊃body
+ :Else
+     body←APLTreeUtils2.DLB¨{(+/∧\';'=⊃¨⍵)↓⍵}1↓body
+     :If '⍝'=⊃⊃body
+         r←APLTreeUtils2.DLB 1↓⊃body
+     :Else
+         r←''
+     :EndIf
+ :EndIf

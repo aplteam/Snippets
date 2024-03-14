@@ -1,0 +1,17 @@
+ msg←sourceFile Edit_ ns;opCode;name;filename;ref;body;body2
+ (opCode msg name filename)←'SelectSnippetForEdit@Please select snippet to be edited'GetNameAndFilename ns
+ :If 1=opCode
+     (name body)←GetNameAndBody filename
+     ref←EstablishCodeInNamespace body
+     ref.⎕ED name
+     body2←GetCodeFromWS ref name
+     :If ≡/body body2
+         msg←'No change detected'
+     :ElseIf 0=≢(∊body2)~⎕UCS 10 13
+         msg←'Cancelled by user' ⋄ →0
+     :ElseIf CommTools.YesOrNo'Sure you want to save "',name,'" ?'
+         (⊂body2)FilesAndDirs.NPUT filename 1
+     :Else
+         msg←'Cancelled by user' ⋄ →0
+     :EndIf
+ :EndIf

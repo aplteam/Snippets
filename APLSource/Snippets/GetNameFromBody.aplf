@@ -1,0 +1,6 @@
+ name←GetNameFromBody body
+ :If ∨/':class' ':namespace'{⍺≡(≢⍺)↑⍵}¨⊂⎕C' '~⍨⊃body
+     name←{⍵↑⍨¯1+⍵⍳' '}{⍵↓⍨+⍵⍳' '}APLTreeUtils2.DLB⊃body
+ :Else
+     name←⊃(⎕NS'').{' '≠1↑0⍴∊⎕FX ⍵: ⋄ ' '~⍨¨↓⎕NL⍳16}body
+ :EndIf

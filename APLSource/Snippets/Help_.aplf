@@ -1,0 +1,3 @@
+ r←Help_
+ r←0 0⍴''
+ ⎕SE.ADOC.Browse ⎕this

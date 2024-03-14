@@ -1,0 +1,9 @@
+ r←Initial
+ r←''
+ :If 0<⎕SE.Snippets.⎕NC'DEVELOPMENT'
+ :AndIf 1=⎕SE.Snippets.DEVELOPMENT
+     ⎕SE.Snippets.DEVELOPMENTwas←⎕SE.Snippets.DEVELOPMENT
+     ⎕SE.Snippets.DEVELOPMENT←0
+ :AndIf ~1 CommTools.YesOrNo'Note that tests are executed in ⎕SE! Continue?'
+     r←'Cancelled by user'
+ :EndIf

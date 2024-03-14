@@ -1,0 +1,4 @@
+ ref←name EstablishVarsInNamespace value
+ ref←⎕NS''
+ ⍎'ref.',name,'←value'
+⍝Done

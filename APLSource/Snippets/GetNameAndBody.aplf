@@ -1,0 +1,9 @@
+ (name body)←GetNameAndBody filename;body
+ body←⊃⎕NGET filename 1
+ body←(-+/∧\0=⌽≢¨body)↓body
+ :If '.apla'≡3⊃⎕NPARTS filename
+     name←2⊃⎕NPARTS filename ⍝ For a variable the filename defines the name
+     body←⎕SE.Dyalog.Array.Deserialise body
+ :Else
+     name←GetNameFromBody body
+ :EndIf

@@ -1,0 +1,35 @@
+ (opCode msg name filename)←caption GetNameAndFilename ns;list;list2;ind;ind2
+⍝ opCodes:
+⍝  0 = nothing to do (for example, no snippets found)
+⍝  1 = All fine, carry on
+⍝ ¯1 = Snippet not found
+⍝ ¯2 = Cancelled by user
+ msg←name←filename←''
+ :If 0<≢list←FilesAndDirs.ListFiles GetHomeFolder sourceFile,'/..'
+     list2←{2⊃⎕NPARTS ⍵}¨list
+     name←{0≡⍵:'' ⋄ ⍵}ns._1
+     :If 0<≢name
+         :If '*'∊name
+             ind←⍸(name~'*'){(⎕C ⍺)∘≡¨⎕C(≢⍺)↑¨⍵}list2
+             :If 1<≢ind
+                 :If 0=≢ind2←caption CommTools.Select list2[ind]
+                     msg←'Cancelled by user' ⋄ opCode←¯2 ⋄ →0
+                 :EndIf
+                 ind←ind[ind2]
+             :EndIf
+         :Else
+             :If 0=≢ind←⍸(⎕C list2)≡¨⊂⎕C name
+                 msg←'Snippet not found' ⋄ opCode←¯1 ⋄ →0
+             :EndIf
+         :EndIf
+     :Else
+         :If 0=≢ind←caption CommTools.Select list2
+             msg←'Cancelled by user' ⋄ opCode←¯2 ⋄ →0
+         :EndIf
+     :EndIf
+     name←ind⊃list2
+     filename←ind⊃list
+     opCode←1
+ :Else
+     msg←'No snippets found' ⋄ opCode←0 ⋄
+ :EndIf

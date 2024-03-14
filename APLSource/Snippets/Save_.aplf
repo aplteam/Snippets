@@ -1,0 +1,79 @@
+ msg←Save_ ns;cl;body;name;extension;filename;ref;qdmx;q;parent;nc;name_
+ :If 0=≢ns.Arguments
+     'cl'⎕WC'Clipboard'
+     body←⊆cl.Text
+     :If 0=≢name←''ns.Switch'name'
+         name←({ns←⎕NS'' ⋄ 0=ns.⎕NC ⍵:1 ⋄ ⎕←'Please enter a valid APL name' ⋄ 0}CommTools.AskForText)'name@Specify the name of the snippet'
+     :EndIf
+     :If 0=≢name
+         msg←'Cancelled by user' ⋄ →0
+     :EndIf
+ :Else
+     name←ns._1
+     :If '.'∊name
+         parent←{⍵↓⍨-'.'⍳⍨⌽⍵}name
+         ('Object not found',name)Assert 0<≢parent
+     :Else
+         parent←⊃{⍵/⍨~'['∊¨⍵}{⍵↓⍨+/∧\'⎕se'∘≡¨3↑¨⎕C ⍵}⎕NSI
+         nc←(⍎parent).⎕NC name
+         :If nc=¯1
+             msg←'Invalid snippet name' ⋄ →0
+         :ElseIf nc=0
+             msg←'Name has no value?!' ⋄ →0
+         :EndIf
+     :EndIf
+     :If ~(⊂,1 ⎕C parent)∊,¨'#' '⎕SE'
+         ('Parent object not found: ',parent)Assert 9=⎕NC parent
+     :EndIf
+     parent←⍎parent
+     :Select ⊃parent.⎕NC name
+     :Case ¯1
+         ('Name <',name,'> is invalid')⎕SIGNAL 6
+     :Case 0
+         ('<',name,'> not found in ',⍕parent)⎕SIGNAL 6
+     :Case 2
+         body←parent⍎ns._1
+         body←⎕SE.Dyalog.Array.Serialise body
+     :Case 9
+         body←⎕SRC parent⍎name
+     :CaseList 3 4
+         body←parent.⎕NR name
+     :Else
+         ∘∘∘  ⍝ Huh?!
+     :EndSelect
+ :EndIf
+ :If 0=≢body
+     msg←'No name was specified, and the clipboard does not contain code?!'
+ :Else
+     :If 0≠⎕NC'parent'
+         nc←parent.⎕NC name
+     :Else
+         nc←2
+     :EndIf
+     :If nc∊2 3 4
+         extension←(2 3 4⍳nc)⊃'.apla' '.aplf' '.aplo'
+     :Else
+         nc←parent.⎕NC⊂name
+         extension←(9.1 9.4 9.5⍳nc)⊃'.apln' '.aplc' '.apli'
+     :EndIf
+     name_←{⍵↑⍨-¯1+'.'⍳⍨⌽⍵}name
+     filename←(GetHomeFolder),name_,extension
+     :If FilesAndDirs.IsFile filename
+         q←'The file already exists - overwrite?'
+         :If CommTools.YesOrNo q
+             FilesAndDirs.DeleteFile filename
+         :Else
+             msg←'Cancelled by user' ⋄ →0
+         :EndIf
+     :ElseIf FilesAndDirs.IsDir filename
+         msg←'Cannot continue: ',filename,' is a directory' ⋄ →0
+     :EndIf
+     :Trap 0
+         ref←name_{ns←⎕NS'' ⋄ _←⍎'ns.',⍺,'←,/⍵,¨⎕UCS 10' ⋄ ns}body
+     :Else
+         qdmx←⎕DMX
+         msg←qdmx.EM{0=≢⍵:⍺ ⋄ ⍵}qdmx.Message ⋄ →0
+     :EndTrap
+     (⊂body)FilesAndDirs.NPUT filename
+     msg←'Code snippet successfully saved as ',⊃,/1↓⎕NPARTS filename
+ :EndIf

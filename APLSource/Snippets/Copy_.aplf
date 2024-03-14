@@ -1,0 +1,19 @@
+ msg←sourceFile Copy_ ns;name;ind;cl;success;filenames;snippetNames
+ :If 'Win'≡3↑1⊃'#'⎕WG'APLVersion'
+     (filenames snippetNames ind name msg)←CollectSnippetInfo'to copy to clipboard'({0≡⍵:'' ⋄ ⍵}ns._1)sourceFile
+     :If 0=≢msg
+         success←0
+         :Repeat
+             :Trap 0 ⍝ Yes, this fails occasionally under Windows for no reason at all
+                 'cl'⎕WC'Clipboard'
+                 cl.Text←GetCodeFromFile ind⊃filenames
+                 success←1
+             :Else
+                 ⎕DL 0.01
+             :EndTrap
+         :Until success
+         msg←'Copied to the clipboard: ',ind⊃snippetNames
+     :EndIf
+ :Else
+     msg←'This command is only available on Windows'
+ :EndIf

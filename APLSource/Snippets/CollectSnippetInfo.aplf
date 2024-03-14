@@ -1,0 +1,50 @@
+ (filenames snippetNames ind name msg)←{all}CollectSnippetInfo y;caption;txt;sourceFile;folder;ind2;bool;list2
+ all←{0<⎕NC ⍵:⍎⍵ ⋄ 1}'all'
+ (caption txt sourceFile)←3↑y,⊂''
+ snippetNames←msg←''
+ folder←GetHomeFolder sourceFile,'/..'
+ filenames←FilesAndDirs.ListFiles folder
+ :If 0=≢filenames
+     msg←'No ',((~all)/'fixable'),' snippets found' ⋄ →0
+ :EndIf
+ :If all
+     bool←1
+ :Else
+     bool←'.code'∘≢¨3⊃∘⎕NPARTS¨filenames
+     filenames←bool/filenames
+ :EndIf
+ :If 0=≢filenames
+     msg←'No ',((~all)/'fixable'),' snippets found' ⋄ →0
+ :EndIf
+ snippetNames←2⊃∘⎕NPARTS¨filenames
+ name←''
+ :If 0=≢txt
+     txt←'*'
+ :EndIf
+ :If '*'∊name←txt
+     ind←⍸(⎕C name~'*'){⍺∘≡¨⎕C(≢⍺)↑¨⍵}snippetNames
+     :If 0=≢ind
+         msg←'No match found' ⋄ name←'' ⋄ →0
+     :EndIf
+     :If 1=≢ind
+         name←ind⊃snippetNames
+     :Else
+         list2←1↓↓bool{(1,(¯1+≢⍵)⍴⍺)⌿⍵}List_ ns
+         ind2←('Select snippet ',caption)CommTools.Select list2
+         :If 0=≢ind2
+             name←''
+             msg←'Cancelled by user'
+         :Else
+             ind←ind[ind2]
+             name←ind⊃snippetNames
+         :EndIf
+     :EndIf
+ :Else
+     ind←⍸(⎕C snippetNames)≡¨⊂⎕C name
+     :If 0=≢ind
+         msg←'No snippet found'
+         name←''
+     :Else
+         name←ind⊃snippetNames
+     :EndIf
+ :EndIf

@@ -1,0 +1,5 @@
+ Cleanup
+ :If 0<⎕SE.Snippets.⎕NC'DEVELOPMENTwas'
+     ⎕SE.Snippets.DEVELOPMENT←⎕SE.Snippets.DEVELOPMENTwas
+     ⎕SE.Snippets.⎕EX'DEVELOPMENTwas'
+ :EndIf

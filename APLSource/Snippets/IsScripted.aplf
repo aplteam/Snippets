@@ -1,0 +1,4 @@
+ r←{x}IsScripted y;ref
+⍝ Returns a 1 for classes, interfaces and scripted namespaces and 0 otherwise.
+ ref←{0<⎕NC'x':⍎⍵ ⋄ ⎕THIS}'x'
+ r←ref.{11 16::0 ⋄ 1⊣⎕SRC ⍵}y

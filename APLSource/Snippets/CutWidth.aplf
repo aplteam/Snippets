@@ -1,0 +1,6 @@
+ r←CutWidth r;rows
+ :If ⎕PW<1+2⊃⍴r
+     rows←⍸∨/' '≠⎕PW↓[2]r
+     r[rows;(⎕PW-3)+⍳3]←'.'
+     r←⎕PW↑[2]r
+ :EndIf

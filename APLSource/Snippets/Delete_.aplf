@@ -1,0 +1,7 @@
+ msg←Delete_ ns;filenames;snippetNames;ind;name;msg
+ (filenames snippetNames ind name msg)←CollectSnippetInfo'to copy to clipboard'({0≡⍵:'' ⋄ ⍵}ns._1)
+ :If 0<≢name
+     :If FilesAndDirs.DeleteFile ind⊃filenames
+         msg←'Snippet deleted: ',name
+     :EndIf
+ :EndIf

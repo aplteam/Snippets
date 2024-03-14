@@ -1,0 +1,11 @@
+ body←GetCodeFromFile filename;buff
+ body←⊃FilesAndDirs.NGET filename 1
+ :If '.apla'≡3⊃⎕NPARTS filename
+     body←⎕SE.Dyalog.Array.Deserialise body
+ :ElseIf 1=≢body
+ :AndIf (⊂3⊃⎕NPARTS filename)∊'.aplf' '.aplo' '.code'
+     buff←{⍵{⍵\⍵/⍺}{~⍵∨≠\⍵}''''=⍵}⊃body ⍝ Wipe out anything quoted
+     body←⊂(¯1+buff⍳'⍝')↑⊃body
+ :EndIf
+ body←↓APLTreeUtils2.DLB↑body
+⍝Done

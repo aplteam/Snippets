@@ -1,0 +1,3 @@
+ folder←GetHomeFolder folder
+ folder,←'/.snippets/'
+ 'Create!'FilesAndDirs.CheckPath folder

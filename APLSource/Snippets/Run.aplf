@@ -1,0 +1,26 @@
+ r←sourceFile Run(Cmd Args);folder;⎕TRAP
+ r←0 0⍴''
+ :Select ⎕C Cmd
+ :Case ⎕C'List'
+     r←sourceFile List_ Args
+ :Case ⎕C'Edit'
+     r←sourceFile Edit_ Args
+ :Case ⎕C'Copy'
+     r←sourceFile Copy_ Args
+ :Case ⎕C'Fix'
+     r←sourceFile Fix_ Args
+ :Case ⎕C'Save'
+     r←Save_ Args
+ :Case ⎕C'Delete'
+     r←Delete_ Args
+ :Case ⎕C'Compare'
+     r←Compare_ Args
+ :Case ⎕C'Show'
+     r←sourceFile Show_ Args
+ :Case ⎕C'Help'
+     r←Help_ Args
+ :Case ⎕C'Version'
+     r←Version_
+ :Else
+     ∘∘∘ ⍝ Huh?!
+ :EndSelect

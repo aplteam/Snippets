@@ -1,0 +1,7 @@
+ ref←EstablishCodeInNamespace body
+ ref←⎕NS''
+ :If ∨/':class' ':namespace'{⍺≡(≢⍺)↑⍵}¨⊂⎕C' '~⍨⊃body
+     ref.⎕FIX body
+ :Else
+     ref.⎕FX body
+ :EndIf

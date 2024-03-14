@@ -1,0 +1,31 @@
+ r←sourceFile List_ ns;folder;list;comments;bool;list2;name;full;ind
+ r←'No snippets found'
+ folder←GetHomeFolder sourceFile,'/..'
+ list←FilesAndDirs.ListFiles folder
+ full←ns.Switch'full'
+ :If 0<≢list
+     list2←{⊃,/1↓⎕NPARTS ⍵}¨list
+     name←ns._1
+     :If 0≢name
+         bool←name{(⎕C ⍺)∘≡¨⎕C(≢⍺)↑¨⍵}list2
+         (list list2)←bool∘/¨list list2
+     :EndIf
+ :AndIf 0<≢list
+     :If full
+         r←list
+     :Else
+         r←list2
+     :EndIf
+     :If ns.Switch'short'
+         r←⍪(⊂'*** Folder: ',folder),' ',¨r
+     :Else
+         comments←GetComment¨list
+         :If 0<≢ind←⍸{'.code'≡3⊃⎕NPARTS ⍵}¨list
+             comments[ind]←∊∘GetCodeFromFile¨list[ind]
+         :EndIf
+         r←r,[1.5]comments
+         r←'*** Folder:'folder⍪r
+     :EndIf
+     r←⍕r
+     r←CutWidth r
+ :EndIf

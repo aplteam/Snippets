@@ -1,0 +1,7 @@
+ Init;json;cfg;buildNo;body
+⍝ Initialize the "Snippets" project
+ :If 0=⎕SE.⎕NC'Snippets.DEVELOPMENT'
+ :AndIf 1 CommTools.YesOrNo'Set DEVELOPMENT←1 in ⎕SE.Snippets? (Allows executing user command code in # rather than ⎕SE)'
+     ⎕SE.Snippets.DEVELOPMENT←1
+ :EndIf
+ ⍝Done

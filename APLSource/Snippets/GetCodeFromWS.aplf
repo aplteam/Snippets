@@ -1,0 +1,7 @@
+ body←GetCodeFromWS(ref name);buff
+ :If ref IsScripted name
+     ∘∘∘  ⍝TODO⍝ Scripts are not yet supported
+ :Else
+     body←↓ref.⎕CR name
+     body←{⍵↓⍨-+/∧\' '=⌽⍵}¨body
+ :EndIf
