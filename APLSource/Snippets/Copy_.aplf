@@ -1,6 +1,6 @@
  msg←sourceFile Copy_ ns;name;ind;cl;success;filenames;snippetNames
  :If 'Win'≡3↑1⊃'#'⎕WG'APLVersion'
-     (filenames snippetNames ind name msg)←CollectSnippetInfo'to copy to clipboard'({0≡⍵:'' ⋄ ⍵}ns._1)sourceFile
+     (filenames snippetNames ind name msg)←CollectSnippetInfo'to copy to clipboard' ns sourceFile
      :If 0=≢msg
          success←0
          :Repeat
