@@ -59,7 +59,7 @@
 
  c←⎕NS''
  c.Name←'Help'
- c.Desc←'Provide a help page explaining the pronciples'
+ c.Desc←'Provide a help page explaining the principles'
  c.Group←'Snippets'
  c.Parse←''
  r,←c
