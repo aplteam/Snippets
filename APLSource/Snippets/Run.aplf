@@ -12,7 +12,7 @@
  :Case ⎕C'Save'
      r←Save_ Args
  :Case ⎕C'Delete'
-     r←Delete_ Args
+     r←sourceFile Delete_ Args
  :Case ⎕C'Compare'
      r←Compare_ Args
  :Case ⎕C'Show'

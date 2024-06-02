@@ -1,10 +1,14 @@
- msg←sourceFile Edit_ ns;opCode;name;filename;ref;body;body2
+ msg←sourceFile Edit_ ns;opCode;name;filename;ref;body;body2;isCode
  (opCode msg name filename)←'SelectSnippetForEdit@Please select snippet to be edited'GetNameAndFilename ns
  :If 1=opCode
      (name body)←GetNameAndBody filename
-     ref←EstablishCodeInNamespace body
+     :If isCode←'.code'≡⎕C 3⊃⎕NPARTS filename
+         ref←(2⊃⎕NPARTS filename)EstablishCodeSnippetInNamespace body
+     :Else
+         ref←EstablishCodeInNamespace body
+     :EndIf
      ref.⎕ED name
-     body2←GetCodeFromWS ref name
+     body2←isCode GetCodeFromWS ref name
      :If ≡/body body2
          msg←'No change detected'
      :ElseIf 0=≢(∊body2)~⎕UCS 10 13

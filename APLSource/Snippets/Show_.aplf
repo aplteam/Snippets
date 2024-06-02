@@ -12,11 +12,14 @@
          r←(⊂(⎕PW-5)⍴'-')⍪r
      :Else
          (name body)←2↑GetNameAndBody filename
-         :If '.apla'≡3⊃⎕NPARTS filename
+         :Select ⎕C 3⊃⎕NPARTS filename
+         :Case '.apla'
              ref←name EstablishVarsInNamespace body
+         :Case '.code'
+             ref←name EstablishCodeSnippetInNamespace body
          :Else
              ref←EstablishCodeInNamespace body
-         :EndIf
+         :EndSelect
          ref.{{}(⎕ED⍠('ReadOnly' 1)&⍵)}name
      :EndIf
  :EndIf

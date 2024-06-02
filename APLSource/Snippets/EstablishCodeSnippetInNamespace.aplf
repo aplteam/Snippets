@@ -1,0 +1,4 @@
+ ref←name EstablishCodeSnippetInNamespace value
+ ref←⎕NS''
+ ⍎'ref.',name,'←value'
+⍝Done

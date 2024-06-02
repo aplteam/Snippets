@@ -1,2 +1,4 @@
  r←Version_
- r←'0.5.0+100'
+
+⍝ See also `History`
+ r←'0.5.2+100'

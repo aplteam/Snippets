@@ -1,17 +1,22 @@
- msg←sourceFile Copy_ ns;name;ind;cl;success;filenames;snippetNames
+ msg←sourceFile Copy_ ns;name;ind;cl;success;filenames;snippetNames;counter;max;qdmx
  :If 'Win'≡3↑1⊃'#'⎕WG'APLVersion'
-     (filenames snippetNames ind name msg)←CollectSnippetInfo'to copy to clipboard' ns sourceFile
+     name←''ns.Switch ns._1
+     (filenames snippetNames ind name msg)←CollectSnippetInfo'to copy to clipboard'name sourceFile
      :If 0=≢msg
-         success←0
+         success←counter←0
+         max←5
          :Repeat
              :Trap 0 ⍝ Yes, this fails occasionally under Windows for no reason at all
                  'cl'⎕WC'Clipboard'
-                 cl.Text←GetCodeFromFile ind⊃filenames
+                 cl{11::⍺{_←⎕DL 0.5 ⋄ ⍺ ∇ ⍵}⍵ ⋄ ⍺.Text←⍵}GetCodeFromFile ind⊃filenames
                  success←1
              :Else
                  ⎕DL 0.01
+                 counter+←1
              :EndTrap
-         :Until success
+         :Until success∨counter>max
+         qdmx←⎕DMX
+         ('Could not load <',(⊃,/1 ⎕NPARTS ind⊃filenames),'> : ',qdmx.Message)Assert success
          msg←'Copied to the clipboard: ',ind⊃snippetNames
      :EndIf
  :Else

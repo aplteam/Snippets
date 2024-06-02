@@ -1,10 +1,15 @@
  Prepare;testPath;testFilename;ask;answer;options;flag;ind
-⍝ Creates an instance of the class `Tester2` named `T` and configures it for
+⍝ Creates an instance of the class `Tester2` named `T` and configures it.
 ⍝ Assumes that the project is handled by the project manager "Cider", and that there is
 ⍝ a namespace ##.CiderConfig available with the Cider config parameters.
 ⍝ As a side effect is creates a folder "TestResults" in the project's root folder if the
 ⍝ user wants to do code coverage with the `CodeCoverage` class.
  ⎕IO←1 ⋄ ⎕ML←1
+ :Trap 911
+     {}⎕SE.UCMD'Snippets.Version'
+ :Else
+     {}⎕SE.UCMD'UReset'
+ :EndTrap
  T←⎕NEW Tester2 ⎕THIS
  testPath←##.CiderConfig.HOME,'/TestResults'
  testFilename←testPath,'/CodeCoverage'
@@ -18,13 +23,14 @@
              1 CodeCoverage.DeleteFiles testFilename
          :EndIf
      :Else
-         flag←0 CommTools.YesOrNo'Code coverage?'
+         flag←1 CommTools.YesOrNo'Code coverage?'
      :EndIf
  :Else
-     flag←0 CommTools.YesOrNo'Code coverage?'
+     flag←1 CommTools.YesOrNo'Code coverage?'
  :EndIf
  :If flag
      3 ⎕MKDIR testPath  ⍝
-     T.codeCoverage←⎕NEW CodeCoverage(,⊂'#.Snippets.Snippets_UC')
+      ⍝TODO⍝ T.codeCoverage←⎕NEW CodeCoverage(,⊂'⎕SE.Snippets')
+     T.codeCoverage←⎕NEW CodeCoverage(,⊂'⎕SE._tatin.aplteam_Snippets_0_5_2')
      T.codeCoverage.filename←testFilename
  :EndIf

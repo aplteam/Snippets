@@ -10,7 +10,7 @@
  CommTools.Pause'This test needs you: it will open the help page in your default brwoser'
 
  res←∆UCMD'Help'
- →T.PassesIf CommTools.YesOrNo'Did the help page show in your default browser?'
+ →T.PassesIf 1 CommTools.YesOrNo'Did the help page show in your default browser?'
 
  R←T._OK
 ⍝Done

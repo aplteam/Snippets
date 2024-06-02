@@ -48,16 +48,19 @@
      :If 0≠⎕NC'parent'
          nc←parent.⎕NC name
      :Else
-         nc←2
+         nc←0
      :EndIf
      :If nc∊2 3 4
          extension←(2 3 4⍳nc)⊃'.apla' '.aplf' '.aplo'
+     :ElseIf nc=0
+         extension←'.code'
+         body←∊body
      :Else
          nc←parent.⎕NC⊂name
          extension←(9.1 9.4 9.5⍳nc)⊃'.apln' '.aplc' '.apli'
      :EndIf
      name_←{⍵↑⍨-¯1+'.'⍳⍨⌽⍵}name
-     filename←(GetHomeFolder),name_,extension
+     filename←(GetHomeFolder 1⊃⎕nparts sourceFile),name_,extension
      :If FilesAndDirs.IsFile filename
          q←'The file already exists - overwrite?'
          :If CommTools.YesOrNo q

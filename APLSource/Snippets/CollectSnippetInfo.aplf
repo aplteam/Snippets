@@ -1,7 +1,6 @@
- (filenames snippetNames ind name msg)←{all}CollectSnippetInfo y;caption;txt;sourceFile;folder;ind2;bool;list2;ns
+ (filenames snippetNames ind name msg)←{all}CollectSnippetInfo y;caption;txt;sourceFile;folder;ind2;bool;list2
  all←{0<⎕NC ⍵:⍎⍵ ⋄ 1}'all'
- (caption ns sourceFile)←3↑y,⊂''
- txt←{0≡⍵:'' ⋄ ⍵}ns._1
+ (caption txt sourceFile)←3↑y,⊂''
  snippetNames←msg←''
  folder←GetHomeFolder sourceFile,'/..'
  filenames←FilesAndDirs.ListFiles folder

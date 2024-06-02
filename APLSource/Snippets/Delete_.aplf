@@ -1,5 +1,6 @@
- msg←Delete_ ns;filenames;snippetNames;ind;name;msg
- (filenames snippetNames ind name msg)←CollectSnippetInfo'to copy to clipboard'({0≡⍵:'' ⋄ ⍵}ns._1)
+ msg←sourceFile Delete_ ns;filenames;snippetNames;ind;name;msg;txt
+ txt←''ns.Switch ns._1
+ (filenames snippetNames ind name msg)←CollectSnippetInfo'to be deleted'txt sourceFile
  :If 0<≢name
      :If FilesAndDirs.DeleteFile ind⊃filenames
          msg←'Snippet deleted: ',name

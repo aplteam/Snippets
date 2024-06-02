@@ -1,9 +1,13 @@
  (name body)←GetNameAndBody filename;body
  body←⊃⎕NGET filename 1
  body←(-+/∧\0=⌽≢¨body)↓body
- :If '.apla'≡3⊃⎕NPARTS filename
+ :Select ⎕C 3⊃⎕NPARTS filename
+ :Case '.apla'
      name←2⊃⎕NPARTS filename ⍝ For a variable the filename defines the name
      body←⎕SE.Dyalog.Array.Deserialise body
+ :Case '.code'
+     name←2⊃⎕NPARTS filename ⍝ For a code snippted the filename defines the name
+     body←∊body
  :Else
      name←GetNameFromBody body
- :EndIf
+ :EndSelect
