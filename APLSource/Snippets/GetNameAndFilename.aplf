@@ -5,7 +5,7 @@
 ⍝ ¯1 = Snippet not found
 ⍝ ¯2 = Cancelled by user
  msg←name←filename←''
- :If 0<≢list←FilesAndDirs.ListFiles GetHomeFolder sourceFile,'/..'
+ :If 0<≢list←FilesAndDirs.ListFiles GetSnippetsFolder
      list2←{2⊃⎕NPARTS ⍵}¨list
      name←{0≡⍵:'' ⋄ ⍵}ns._1
      :If 0<≢name

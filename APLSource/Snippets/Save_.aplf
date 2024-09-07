@@ -64,7 +64,7 @@
      :Else
          'An assigned name must not carry dots'Assert~'.'∊name_
      :EndIf
-     filename←(GetHomeFolder 1⊃⎕NPARTS sourceFile),name_,extension
+     filename←GetSnippetsFolder,'/',name_,extension
      :If FilesAndDirs.IsFile filename
          q←'The file already exists - overwrite?'
          :If CommTools.YesOrNo q

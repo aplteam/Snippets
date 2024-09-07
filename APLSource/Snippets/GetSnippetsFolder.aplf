@@ -1,0 +1,7 @@
+ folder←GetSnippetsFolder;name;flag;oldFolder;res
+⍝ Return the full path to (and including) .snippets in the user's home directory
+⍝ Has a side effect: creates the hosting folder in case it does not yet exist
+ name←(1+'win'≡⎕C 3↑1⊃'.'⎕WG'aplversion')⊃'HOME' 'USERPROFILE'
+ folder←FilesAndDirs.NormalizePath(2 ⎕NQ #'GetEnvironment'name),'/.snippets/'
+ 1 ⎕MKDIR folder
+⍝Done

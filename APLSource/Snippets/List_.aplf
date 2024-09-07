@@ -1,6 +1,6 @@
  r←sourceFile List_ ns;folder;list;comments;bool;list2;name;full;ind
  r←'No snippets found'
- folder←GetHomeFolder sourceFile,'/..'
+ folder←GetSnippetsFolder
  list←FilesAndDirs.ListFiles folder
  full←ns.Switch'full'
  :If 0<≢list

@@ -2,7 +2,7 @@
  all←{0<⎕NC ⍵:⍎⍵ ⋄ 1}'all'
  (caption txt sourceFile)←3↑y,⊂''
  snippetNames←msg←''
- folder←GetHomeFolder sourceFile,'/..'
+ folder←GetSnippetsFolder
  filenames←FilesAndDirs.ListFiles folder
  :If 0=≢filenames
      msg←'No ',((~all)/'fixable'),' snippets found' ⋄ →0
