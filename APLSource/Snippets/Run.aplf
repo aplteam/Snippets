@@ -1,5 +1,9 @@
  r←sourceFile Run(Cmd Args);folder;⎕TRAP
  r←0 0⍴''
+ :If ''≡Args
+     ⎕EX'Args'
+     'Args'⎕NS''
+ :EndIf
  Args.CalledFrom←⊃(¯1+⎕XSI⍳⊂'⎕SE.UCMD')↓⎕NSI
  :Select ⎕C Cmd
  :Case ⎕C'List'
