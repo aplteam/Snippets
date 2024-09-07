@@ -1,5 +1,6 @@
  r←sourceFile Run(Cmd Args);folder;⎕TRAP
  r←0 0⍴''
+ Args.CalledFrom←⊃(¯1+⎕XSI⍳⊂'⎕SE.UCMD')↓⎕NSI
  :Select ⎕C Cmd
  :Case ⎕C'List'
      r←sourceFile List_ Args

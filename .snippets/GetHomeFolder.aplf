@@ -1,0 +1,7 @@
+ r←GetHomeFolder
+⍝ Returns the folders that is the user's home folder
+ :If 'Win'≡3↑⊃# ⎕WG'APLVersion '
+     r←¯1↓⊃1 ⎕NPARTS ¯1↓⊃1 ⎕NPARTS 2⊃4070⌶0
+ :Else
+     r←2 ⎕NQ'.' 'GetEnvironment' 'HOME'
+ :EndIf

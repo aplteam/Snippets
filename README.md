@@ -30,7 +30,7 @@ The Dyalog APL user command `]Snippets` allows you to create, list and inspect s
 ## Examples
 
 ```
-]Snippets.List
+      ]Snippets.List
  *** Folder:     C:\Users\...\Documents\MyUCMDs\Snippets\.snippets/                                              
  Assert          Takes Boolean ⍵ and returns it if true but signals an error otherwise                  
  History         Returns all "leading" comments as a vector of characters vectors               
@@ -46,7 +46,8 @@ The Dyalog APL user command `]Snippets` allows you to create, list and inspect s
 Tell something
       'Tell something'Assert 0
                       ∧
-
+      #.variable←'This' 'is' 'a' 'nested' 'vector'
+      ]Snippets.Save #.variable -name=MyStuff-variable 
 ```
 
 
@@ -78,4 +79,5 @@ Tell something
 ```
 
 This will make the user commands of `Snippets` available. Note that `Snippets` does not offer an API.
+
 

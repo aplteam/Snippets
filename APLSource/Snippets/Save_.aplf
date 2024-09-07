@@ -59,8 +59,12 @@
          nc←parent.⎕NC⊂name
          extension←(9.1 9.4 9.5⍳nc)⊃'.apln' '.aplc' '.apli'
      :EndIf
-     name_←{⍵↑⍨-¯1+'.'⍳⍨⌽⍵}name
-     filename←(GetHomeFolder 1⊃⎕nparts sourceFile),name_,extension
+     :If 0=≢name_←''Args.Switch'name'
+         name_←{⍵↑⍨-¯1+'.'⍳⍨⌽⍵}name
+     :Else
+         'An assigned name must not carry dots'Assert~'.'∊name_
+     :EndIf
+     filename←(GetHomeFolder 1⊃⎕NPARTS sourceFile),name_,extension
      :If FilesAndDirs.IsFile filename
          q←'The file already exists - overwrite?'
          :If CommTools.YesOrNo q
@@ -72,7 +76,7 @@
          msg←'Cannot continue: ',filename,' is a directory' ⋄ →0
      :EndIf
      :Trap 0
-         ref←name_{ns←⎕NS'' ⋄ _←⍎'ns.',⍺,'←,/⍵,¨⎕UCS 10' ⋄ ns}body
+         ref←({⍵↑⍨-¯1+'.'⍳⍨⌽⍵}name){ns←⎕NS'' ⋄ _←⍎'ns.',⍺,'←,/⍵,¨⎕UCS 10' ⋄ ns}body
      :Else
          qdmx←⎕DMX
          msg←qdmx.EM{0=≢⍵:⍺ ⋄ ⍵}qdmx.Message ⋄ →0

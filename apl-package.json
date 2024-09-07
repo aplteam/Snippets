@@ -19,5 +19,5 @@
   source: "APLSource/Snippets",
   tags: "code-snippets",
   userCommandScript: "APLSource/Snippets_UC.dyalog",
-  version: "0.5.2+77",
+  version: "0.5.3+78",
 }

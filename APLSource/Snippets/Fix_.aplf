@@ -1,10 +1,10 @@
- msg←sourceFile Fix_ ns;folder;filenames;snippetNames;name;ind;index;body;q;buff;parent;qdmx;isVars;extension;res
- (filenames snippetNames ind name msg)←0 CollectSnippetInfo'to fix in the workspace'({0≡⍵:'' ⋄ ⍵}ns._1) sourceFile
+ msg←sourceFile Fix_ ns;folder;filenames;snippetNames;name;ind;index;body;q;buff;parent;qdmx;isVars;extension;res;name_
+ (filenames snippetNames ind name msg)←0 CollectSnippetInfo'to fix in the workspace'({0≡⍵:'' ⋄ ⍵}ns._1)sourceFile
  :If 'Cancelled by user'≢msg
      parent←''ns.Switch'target'
      :If 0<≢name
          :If 0=≢parent
-             :If (,'#')≢parent←⊃{⍵/⍨~'['∊¨⍵}{⍵↓⍨+/∧\'⎕se'∘≡¨3↑¨⎕C ⍵}⎕NSI
+             :If (,'#')≢parent←Args.CalledFrom
                  index←'WhereToFix@Where do you want to fix it:'CommTools.Select(⊂,'#'),⊂parent
                  :If 0=≢index
                      msg←'Cancelled by user' ⋄ →0
@@ -33,38 +33,43 @@
                  msg←'Cancelled by user' ⋄ →0
              :EndIf
          :EndIf
-         :Select ⊃parent.⎕NC name
+         :If '-'∊name
+             name_←{⍵↑⍨1+-'-'⍳⍨⌽⍵}name
+         :Else
+             name_←name
+         :EndIf
+         :Select ⊃parent.⎕NC name_
          :Case 0
               ⍝ Name is okay and not in use, nothing to do
          :Case ¯1
-             ('Invalid name: ',name)⎕SIGNAL 11
+             ('Invalid name: ',name_)⎕SIGNAL 11
          :Else
-             q←'"',name,'" already used in ',(⍕parent),'; overwrite?'
+             q←'"',name_,'" already defined in ',(⍕parent),'; overwrite?'
              :If 0=CommTools.YesOrNo q
                  msg←'Cancelled by user' ⋄ →0
              :EndIf
-             parent.⎕EX name
+             parent.⎕EX name_
          :EndSelect
          :If (⊂extension)∊'.aplf' '.aplo'
              buff←parent.⎕FX body
              :If ' '=1↑0⍴∊buff
-                 msg←'Function "',name,'" fixed in ',⍕parent
+                 msg←'Function "',name_,'" fixed in ',⍕parent
              :Else
-                 msg←'Attempt to fix "',name,'" caused an error in line ',⍕buff
+                 msg←'Attempt to fix "',name_,'" caused an error in line ',⍕buff
              :EndIf
-             res←⎕SE.Link.Add(⍕parent),'.',name
+             res←⎕SE.Link.Add(⍕parent),'.',name_
              :If 'Added:'{⍺≡(≢⍺)↑⍵}res
                  msg,←'; ',res
              :EndIf
          :ElseIf isVars
-             ⍎(⍕parent),'.',name,'←body'
-             msg←'Variable "',name,'" assigned in "',(⍕parent),'"'
+             ⍎(⍕parent),'.',name_,'←body'
+             msg←'Variable "',name_,'" assigned in "',(⍕parent),'"'
          :Else
              :Trap 0
                  {}parent.⎕FIX body
-                 msg←'Script "',name,'" fixed in ',⍕parent
+                 msg←'Script "',name_,'" fixed in ',⍕parent
              :Else
-                 msg←'Attempt to fix "',name,'" caused an error'
+                 msg←'Attempt to fix "',name_,'" caused an error'
              :EndTrap
          :EndIf
      :Else
