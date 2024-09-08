@@ -30,7 +30,6 @@
  :EndIf
  :If flag
      3 ⎕MKDIR testPath  ⍝
-      ⍝TODO⍝ T.codeCoverage←⎕NEW CodeCoverage(,⊂'⎕SE.Snippets')
-     T.codeCoverage←⎕NEW CodeCoverage(,⊂'⎕SE._tatin.aplteam_Snippets_0_5_2')
+     T.codeCoverage←⎕NEW CodeCoverage(,⊂'⎕SE.Snippets')
      T.codeCoverage.filename←testFilename
  :EndIf
