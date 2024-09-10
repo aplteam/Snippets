@@ -1,4 +1,8 @@
 (
+ '* 0.6.0 ⋄ 2024-09-09'
+ '  * `Fix` now allows the selection of multiple APL objects'
+ '* 0.5.2 ⋄ 2024-06-03'
+ '  * Quite a number of improvements, especially in the handling of pure code snippets.'
  '* 5.0.3 ⋄ 2024-09-08'
  '  * `Fix`, `Copy` and `Save` now all accept an aditional part of the name that can be interpreted as a group, '
  '    separated from the "real" name by a hyphen.'

@@ -1,6 +1,6 @@
- (filenames snippetNames ind name msg)←{all}CollectSnippetInfo y;caption;txt;sourceFile;folder;ind2;bool;list2
+ (filenames snippetNames indices names msg)←{all}CollectSnippetInfo y;caption;txt;sourceFile;folder;ind2;bool;list2;multiple
  all←{0<⎕NC ⍵:⍎⍵ ⋄ 1}'all'
- (caption txt sourceFile)←3↑y,⊂''
+ (caption txt sourceFile multiple)←4↑y,0
  snippetNames←msg←''
  folder←GetSnippetsFolder
  filenames←FilesAndDirs.ListFiles folder
@@ -17,34 +17,42 @@
      msg←'No ',((~all)/'fixable'),' snippets found' ⋄ →0
  :EndIf
  snippetNames←2⊃∘⎕NPARTS¨filenames
- name←''
+ names←''
  :If 0=≢txt
      txt←'*'
  :EndIf
- :If '*'∊name←txt
-     ind←⍸(⎕C name~'*'){⍺∘≡¨⎕C(≢⍺)↑¨⍵}snippetNames
-     :If 0=≢ind
-         msg←'No match found' ⋄ name←'' ⋄ →0
+ :If '*'∊names←txt
+     indices←⍸(⎕C names~'*'){⍺∘≡¨⎕C(≢⍺)↑¨⍵}snippetNames
+     :If 0=≢indices
+         msg←'No match found' ⋄ names←'' ⋄ →0
      :EndIf
-     :If 1=≢ind
-         name←ind⊃snippetNames
+     :If 1=≢indices
+         names←indices⊃snippetNames
      :Else
          list2←1↓↓bool{(1,(¯1+≢⍵)⍴⍺)⌿⍵}sourceFile List_ ns
-         ind2←('Select snippet ',caption)CommTools.Select list2
+         ind2←('Select snippet',(multiple/'s'),' ',caption)multiple CommTools.Select list2
          :If 0=≢ind2
-             name←''
+             names←''
              msg←'Cancelled by user'
          :Else
-             ind←ind[ind2]
-             name←ind⊃snippetNames
+             indices←indices[ind2]
+             :If multiple
+                 names←snippetNames[indices]
+             :Else
+                 names←indices⊃snippetNames
+             :EndIf
          :EndIf
      :EndIf
  :Else
-     ind←⍸(⎕C snippetNames)≡¨⊂⎕C name
-     :If 0=≢ind
+     indices←⍸(⎕C snippetNames)≡¨⊂⎕C names
+     :If 0=≢indices
          msg←'No snippet found'
-         name←''
+         names←''
      :Else
-         name←ind⊃snippetNames
+         :If multiple
+             names←snippetNames[indices]
+         :Else
+             names←indices⊃snippetNames
+         :EndIf
      :EndIf
  :EndIf
