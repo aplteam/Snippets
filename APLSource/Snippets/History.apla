@@ -1,4 +1,9 @@
 (
+ '* 0.7.0 ⋄ 2024-11-28'
+ '  * `Fix` now allows the specification of multiple APL objects'
+ '  * Documentation polished'
+ '  * Bug fixes'
+ '    * `Fix` did not report correctly when multiple objects got fixed '
  '* 0.6.0 ⋄ 2024-09-09'
  '  * `Fix` now allows the selection of multiple APL objects'
  '* 0.5.2 ⋄ 2024-06-03'

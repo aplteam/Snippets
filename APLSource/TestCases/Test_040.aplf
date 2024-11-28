@@ -11,7 +11,7 @@
  was←cl.Text
  cl{11::⍺{_←⎕DL 0.5 ⋄ ⍺ ∇ ⍵}⍵ ⋄ ⍺.Text←⍵}''
  ref←(##.Snippets_UC.GetRefToSnippets ⍬).CommTools
- ref.Select_Choices←1 2⍴'Select snippet to copy to clipboard' 'Assert.aplf'
+ ref.Select_Choices←1 2⍴'SelectSnippets@' 'Assert.aplf'
  res←∆UCMD'Copy Assert'
  buff←cl.Text
  cl{11::⍺{_←⎕DL 0.5 ⋄ ⍺ ∇ ⍵}⍵ ⋄ ⍺.Text←⍵}was

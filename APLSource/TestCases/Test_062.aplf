@@ -3,7 +3,7 @@
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- Assert 0=⎕NC'QuadVars' ⍝ Must not exist of course
+ Assert 0=⎕NC'QuadVars' ⍝ Must not exist of course; is a class, despite the name
  ⎕SE.Snippets.CommTools.Select_Choices←1 2⍴'WhereToFix@' 2
  res←∆UCMD'Fix ''QuadVars'''
  →T.GoToTidyUp'Script "QuadVars" fixed in #.Snippets.TestCases'≢res

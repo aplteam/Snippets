@@ -1,6 +1,6 @@
  (filenames snippetNames indices names msg)←{all}CollectSnippetInfo y;caption;txt;sourceFile;folder;ind2;bool;list2;multiple
  all←{0<⎕NC ⍵:⍎⍵ ⋄ 1}'all'
- (caption txt sourceFile multiple)←4↑y,0
+ (caption txt sourceFile multiple)←4↑y,1
  snippetNames←msg←''
  folder←GetSnippetsFolder
  filenames←FilesAndDirs.ListFiles folder
@@ -30,7 +30,7 @@
          names←indices⊃snippetNames
      :Else
          list2←1↓↓bool{(1,(¯1+≢⍵)⍴⍺)⌿⍵}sourceFile List_ ns
-         ind2←('Select snippet',(multiple/'s'),' ',caption)multiple CommTools.Select list2
+         ind2←('SelectSnippets@Select snippet',(multiple/'s'),' ',caption)multiple CommTools.Select list2
          :If 0=≢ind2
              names←''
              msg←'Cancelled by user'
@@ -44,15 +44,16 @@
          :EndIf
      :EndIf
  :Else
-     indices←⍸(⎕C snippetNames)≡¨⊂⎕C names
+     :If ','∊names
+         names←','(≠⊆⊢)names
+     :EndIf
+     names←⊆names
+     names~¨←⊂''' '
+     indices←⍸(⎕C snippetNames)∊⎕C names
      :If 0=≢indices
          msg←'No snippet found'
          names←''
      :Else
-         :If multiple
-             names←snippetNames[indices]
-         :Else
-             names←indices⊃snippetNames
-         :EndIf
+         names←snippetNames[indices]
      :EndIf
  :EndIf

@@ -1,4 +1,4 @@
- msg←sourceFile Fix_ ns;filenames;snippetNames;indices;names;parent;name;ind;caption;filename;i
+  msg←sourceFile Fix_ ns;filenames;snippetNames;indices;names;parent;name;ind;caption;filename;i
  (filenames snippetNames indices names msg)←0 CollectSnippetInfo'to fix in the workspace'({0≡⍵:'' ⋄ ⍵}ns._1)sourceFile 1
  :If 'Cancelled by user'≢msg
      parent←''ns.Switch'target'
@@ -20,7 +20,7 @@
          :For i :In ⍳≢indices
              name←i⊃,names
              filename←(i⊃,indices)⊃filenames
-             msg←Fix2 name parent filename
+             msg{0=≢⍺:⍵ ⋄ ⍺,(⎕UCS 10),⍵}←Fix2 name parent filename
              :If 'Cancelled by user'≡msg
                  :If (i+1)≤≢indices
                  :AndIf 1 CommTools.YesOrNo'Quit@Continue with the next snippet?'
@@ -28,9 +28,6 @@
                  :Else
                      :Return
                  :EndIf
-             :Else
-                 ⎕←msg
-                 msg←''
              :EndIf
          :EndFor
      :Else
