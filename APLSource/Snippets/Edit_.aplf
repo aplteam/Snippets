@@ -1,4 +1,4 @@
- msg←sourceFile Edit_ ns;opCode;name;filename;ref;body;body2;isCode
+ msg←Edit_ ns;opCode;name;filename;ref;body;body2;isCode
  (opCode msg name filename)←'SelectSnippetForEdit@Please select snippet to be edited'GetNameAndFilename ns
  :If 1=opCode
      (name body)←GetNameAndBody filename

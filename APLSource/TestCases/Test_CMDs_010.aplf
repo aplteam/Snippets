@@ -1,11 +1,11 @@
- R←Test_010(stopFlag batchFlag);⎕TRAP;res
+ R←Test_CMDs_010(stopFlag batchFlag);⎕TRAP;res
 ⍝ ]Snippets.List
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
  res←∆UCMD'List'
  →T.PassesIf 2=⍴⍴res
- →T.PassesIf ∨/'*** Folder:'⍷res[1;]
+ →T.PassesIf∨/'*** Folder:'⍷res[1;]
 
  R←T._OK
 ⍝Done

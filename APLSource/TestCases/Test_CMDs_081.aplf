@@ -1,0 +1,17 @@
+ R←Test_CMDs_081(stopFlag batchFlag);⎕TRAP;res;ref
+⍝ ]Snippets.Delete on a name with a wildcard that results in three hits of which the first first is selected
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ref←##.Snippets_UC.GetRefToSnippets ⍬
+ ref.CommTools.AddAutomation'Select' 'SelectSnippets1@' 1
+ res←∆UCMD'Delete Hell*'
+ →T.GoToTidyUp res≢'Snippet deleted: Hello1.aplf'
+ →T.GoToTidyUp 0≠+/⎕NEXISTS ##.Snippets.∆SNIPPET_FOLDER,'/Hello1.aplf'
+
+ R←T._OK
+
+∆TidyUp:
+ (##.Snippets.∆SNIPPET_FOLDER,'/')⎕NCOPY ##.CiderConfig.HOME,'/TestData/Hello1.aplf'
+ ref.CommTools.Cleanup
+⍝Done

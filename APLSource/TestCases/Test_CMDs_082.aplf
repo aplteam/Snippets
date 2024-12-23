@@ -1,0 +1,16 @@
+ R←Test_CMDs_082(stopFlag batchFlag);⎕TRAP;res;ref
+⍝ ]Snippets.Delete on a name with a wildcard that results in three hits none of which is selected
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ ref←##.Snippets_UC.GetRefToSnippets ⍬
+ ref.CommTools.AddAutomation'Select' 'SelectSnippets1@' 'q'
+ res←∆UCMD'Delete Hell*'
+ →T.GoToTidyUp res≢'Cancelled by user'
+ →T.GoToTidyUp~∧/⎕NEXISTS ##.Snippets.∆SNIPPET_FOLDER∘,¨'/Hello1.aplf' '/Hello2.aplf' '/Hello3.aplf'
+
+ R←T._OK
+
+∆TidyUp:
+ ref.CommTools.Cleanup
+⍝Done

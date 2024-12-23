@@ -1,0 +1,17 @@
+ R←Test_SCI_023(stopFlag batchFlag);⎕TRAP;searchFor;filenames;snippetNames;indices;names;msg;ref
+⍝ Search for a term without wildcard and without extension with multiple hits of which none is selected
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ searchFor←'Version'
+ ref←##.Snippets_UC.GetRefToSnippets ⍬
+ ref.CommTools.AddAutomation'Select' 'SelectSnippets2@' 'q'
+ (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ →T.GoToTidyUp 0≠≢names
+ →T.GoToTidyUp 0≠≢indices
+ →T.GoToTidyUp msg≢'Cancelled by user'
+
+ R←T._OK
+∆TidyUp:
+ ref.CommTools.Cleanup
+⍝Done

@@ -1,7 +1,7 @@
- msg←sourceFile Copy_ ns;name;ind;cl;success;filenames;snippetNames;counter;max;qdmx
+ msg←Copy_ ns;name;ind;cl;success;filenames;snippetNames;counter;max;qdmx
  :If 'Win'≡3↑1⊃'#'⎕WG'APLVersion'
-     name←''ns.Switch ns._1
-     (filenames snippetNames ind name msg)←CollectSnippetInfo'to copy to clipboard'name sourceFile
+     name←{0≡⍵:'' ⋄ ⍵}ns._1
+     (filenames snippetNames ind name msg)←CollectSnippetInfo'to copy to clipboard'name 0
      :If 0=≢msg
          success←counter←0
          max←5

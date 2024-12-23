@@ -1,4 +1,4 @@
- r←sourceFile List_ ns;folder;list;comments;bool;list2;name;full;ind
+ r←List_ ns;folder;list;comments;bool;list2;name;full;ind
  r←'No snippets found'
  folder←GetSnippetsFolder
  list←FilesAndDirs.ListFiles folder
@@ -7,7 +7,7 @@
      list2←{⊃,/1↓⎕NPARTS ⍵}¨list
      name←ns._1
      :If 0≢name
-         bool←name{(⎕C ⍺)∘≡¨⎕C(≢⍺)↑¨⍵}list2
+         bool←(name~'*'){(⎕C ⍺)∘≡¨⎕C(≢⍺)↑¨⍵}list2
          (list list2)←bool∘/¨list list2
      :EndIf
  :AndIf 0<≢list

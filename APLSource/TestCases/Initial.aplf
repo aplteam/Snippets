@@ -1,9 +1,22 @@
- r←Initial
+ r←Initial ps;options;ind
  r←''
- :If 0<⎕SE.Snippets.⎕NC'DEVELOPMENT'
- :AndIf 1=⎕SE.Snippets.DEVELOPMENT
-     ⎕SE.Snippets.DEVELOPMENTwas←⎕SE.Snippets.DEVELOPMENT
+ :If ps.batchFlag
      ⎕SE.Snippets.DEVELOPMENT←0
- :AndIf ~1 CommTools.YesOrNo'Note that tests are executed in ⎕SE! Continue?'
-     r←'Cancelled by user'
+ :Else
+     options←''
+     options,←⊂'In ⎕SE (recommended for serious testing)'
+     options,←⊂'In # (recommended for development while running tests)'
+     ind←'Where should the tests be executed:'CommTools.Select options
+     :If 0=≢ind
+         r←'Cancelled by user' ⋄ →0
+     :ElseIf ind=1
+         ⎕SE.Snippets.⎕EX'DEVELOPMENT'
+     :ElseIf ind=2
+         ⎕SE.Snippets.DEVELOPMENT←1
+     :Else
+         ∘∘∘ ⍝ Huh?!
+     :EndIf
  :EndIf
+ ##.Snippets.∆SNIPPET_FOLDER←FilesAndDirs.GetTempSubDir'Snippets'
+ ##.Snippets.∆SNIPPET_FOLDER ⎕NCOPY⍠('Wildcard' 1)⊢##.CiderConfig.HOME,'/TestData/*'
+⍝Done

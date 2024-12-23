@@ -1,4 +1,4 @@
- R←Test_020(stopFlag batchFlag);⎕TRAP;res;res2
+ R←Test_CMDs_020(stopFlag batchFlag);⎕TRAP;res;res2
 ⍝ ]Snippets.Version
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  R←T._Failed

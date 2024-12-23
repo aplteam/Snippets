@@ -1,0 +1,1 @@
+ ∊zip dir,¨⍨⊃('unzip ' ' -d ')('tar -xf ' ' -C ')⌽⍨'Win'≡3↑⊃# ⎕WG'APLVersion' 

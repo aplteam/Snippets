@@ -1,6 +1,7 @@
- r←CutWidth r;rows
- :If ⎕PW<1+2⊃⍴r
-     rows←⍸∨/' '≠⎕PW↓[2]r
-     r[rows;(⎕PW-3)+⍳3]←'.'
-     r←⎕PW↑[2]r
+ r←{pw}CutWidth r;rows
+ pw←{0=⎕NC ⍵:⎕PW-7 ⋄ ⍎⍵}'pw'   ⍝ Make room for "  nnn. " in front of each choice
+ :If pw<1+2⊃⍴r
+     rows←⍸∨/' '≠pw↓[2]r
+     r[rows;(pw-3)+⍳3]←'.'
+     r←pw↑[2]r
  :EndIf

@@ -1,4 +1,4 @@
- R←Test_040(stopFlag batchFlag);⎕TRAP;res;res2;cl;was;buff;ref
+ R←Test_CMDs_040(stopFlag batchFlag);⎕TRAP;res;res2;cl;was;buff;ref
 ⍝ ]Snippets.Copy
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  R←T._Failed
@@ -11,11 +11,12 @@
  was←cl.Text
  cl{11::⍺{_←⎕DL 0.5 ⋄ ⍺ ∇ ⍵}⍵ ⋄ ⍺.Text←⍵}''
  ref←(##.Snippets_UC.GetRefToSnippets ⍬).CommTools
- ref.Select_Choices←1 2⍴'SelectSnippets@' 'Assert.aplf'
+ ref.AddAutomation'Select' 'SelectSnippets2@' 'Assert.aplf'
  res←∆UCMD'Copy Assert'
  buff←cl.Text
- cl{11::⍺{_←⎕DL 0.5 ⋄ ⍺ ∇ ⍵}⍵ ⋄ ⍺.Text←⍵}was
- →T.PassesIf 0<≢buff
+ cl.Text←was
+ →T.GoToTidyUp~0<≢buff
+ →T.GoToTidyUp'Assert←'{⍺≢(≢⍺)↑⍵}buff
 
  R←T._OK
 

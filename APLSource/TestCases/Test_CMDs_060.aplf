@@ -1,19 +1,19 @@
- R←Test_060(stopFlag batchFlag);⎕TRAP;res;res2
+ R←Test_CMDs_060(stopFlag batchFlag);⎕TRAP;res;res2;ref
 ⍝ ]Snippets.Fix on a function
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
  Assert 0=⎕NC'Initialize' ⍝ Must not exist of course
- ⎕SE.Snippets.CommTools.Select_Choices←1 2⍴'WhereToFix@' 2
- ⎕SE.Snippets.CommTools.YesOrNo_Answers←1 2⍴'DifferentName@' 'Y'
+ ref←##.Snippets_UC.GetRefToSnippets ⍬
+ ref.CommTools.AddAutomation'Select' 'WhereToFix@' 2
+ ref.CommTools.AddAutomation'YesOrNo' 'DifferentName@' 'Y'
  res←∆UCMD'Fix ''Initialize_tatin_package'''
  →T.GoToTidyUp'Function "Initialize" fixed in #.Snippets.TestCases; Added: #.Snippets.TestCases.Initialize'≢res
  →T.GoToTidyUp 3≠⎕NC'Initialize'
  ⎕SE.Link.Expunge'Initialize'
 
  Assert 0=#.⎕NC'Initialize' ⍝ Must not exist of course
- ⎕se.Snippets.CommTools.Select_Choices←1 2⍴'WhereToFix@' 1
- ⎕se.Snippets.CommTools.YesOrNo_Answers←1 2⍴'DifferentName@' 'Y'
+ 1 ref.CommTools.AddAutomation'Select' 'WhereToFix@' 1
  res←∆UCMD'Fix ''Initialize_tatin_package'''
  →T.GoToTidyUp'Function "Initialize" fixed in #'≢res
  →T.GoToTidyUp 0≠⎕NC'Initialize'
@@ -24,5 +24,5 @@
 ∆TidyUp:
  #.⎕EX'Initialize'
  ⎕SE.Link.Expunge'Initialize'
- ⎕SE.Snippets.CommTools.Cleanup
+ ref.CommTools.Cleanup
 ⍝Done

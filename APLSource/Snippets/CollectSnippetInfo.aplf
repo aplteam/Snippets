@@ -1,45 +1,52 @@
- (filenames snippetNames indices names msg)←{all}CollectSnippetInfo y;caption;txt;sourceFile;folder;ind2;bool;list2;multiple
- all←{0<⎕NC ⍵:⍎⍵ ⋄ 1}'all'
- (caption txt sourceFile multiple)←4↑y,1
- snippetNames←msg←''
+ (filenames snippetNamesFull indices names msg)←{noCodeExtension}CollectSnippetInfo y;caption;searchFor;folder;bool;list2;multiple;ind2;snippetNames
+⍝ Tries o find `searchFor` in the snippets folder. The search is case independent.
+⍝ When no extension is provided as part of `searchFor`, it tries to find a single entry.
+⍝ It it finds multiple, an error willl eventually be thrown.
+⍝ The default for the optional left argument `noCodeExtension` is 1.
+ noCodeExtension←{0<⎕NC ⍵:⍎⍵ ⋄ 1}'noCodeExtension'
+ (caption searchFor multiple)←3↑y,1
+ snippetNamesFull←snippetNames←msg←''
  folder←GetSnippetsFolder
  filenames←FilesAndDirs.ListFiles folder
  :If 0=≢filenames
-     msg←'No ',((~all)/'fixable'),' snippets found' ⋄ →0
+     msg←'No ',((~noCodeExtension)/'fixable'),' snippets found' ⋄ →0
  :EndIf
- :If all
+ :If noCodeExtension
      bool←1
  :Else
      bool←'.code'∘≢¨3⊃∘⎕NPARTS¨filenames
      filenames←bool/filenames
  :EndIf
  :If 0=≢filenames
-     msg←'No ',((~all)/'fixable'),' snippets found' ⋄ →0
+     msg←'No ',((~noCodeExtension)/'fixable'),' snippets found' ⋄ →0
  :EndIf
- snippetNames←2⊃∘⎕NPARTS¨filenames
+ snippetNamesFull←{⊃,/1↓⍵}¨⎕NPARTS¨filenames
+ snippetNames←{⍵↑⍨¯1+⍵⍳'.'}¨snippetNamesFull
  names←''
- :If 0=≢txt
-     txt←'*'
+ :If 0=≢searchFor
+     searchFor←'*'
  :EndIf
- :If '*'∊names←txt
-     indices←⍸(⎕C names~'*'){⍺∘≡¨⎕C(≢⍺)↑¨⍵}snippetNames
+ :If '*'∊names←searchFor
+     indices←⍸(⎕C names~'*'){⍺∘≡¨⎕C(≢⍺)↑¨⍵}snippetNamesFull
      :If 0=≢indices
          msg←'No match found' ⋄ names←'' ⋄ →0
      :EndIf
      :If 1=≢indices
-         names←indices⊃snippetNames
+         names←snippetNamesFull[,indices]
      :Else
-         list2←1↓↓bool{(1,(¯1+≢⍵)⍴⍺)⌿⍵}sourceFile List_ ns
-         ind2←('SelectSnippets@Select snippet',(multiple/'s'),' ',caption)multiple CommTools.Select list2
+         list2←snippetNamesFull[indices]
+         ind2←('SelectSnippets1@Select snippet',(multiple/'s'),' ',caption)multiple CommTools.Select list2
          :If 0=≢ind2
              names←''
+             indices←⍬
              msg←'Cancelled by user'
          :Else
-             indices←indices[ind2]
              :If multiple
-                 names←snippetNames[indices]
+                 names←{⍵↑⍨¯1+⍵⍳' '}¨list2[,ind2]
+                 indices←snippetNamesFull⍳names
              :Else
-                 names←indices⊃snippetNames
+                 names←{⍵↑⍨¯1+⍵⍳' '}ind2⊃list2
+                 indices←snippetNamesFull⍳⊂names
              :EndIf
          :EndIf
      :EndIf
@@ -47,13 +54,33 @@
      :If ','∊names
          names←','(≠⊆⊢)names
      :EndIf
-     names←⊆names
+     names←,⊆names
      names~¨←⊂''' '
-     indices←⍸(⎕C snippetNames)∊⎕C names
+     indices←⍸⊃∨/FindSnippet¨names
      :If 0=≢indices
          msg←'No snippet found'
          names←''
      :Else
-         names←snippetNames[indices]
+         names←snippetNamesFull[indices]
+         :If 1<≢names
+             :If multiple
+                 ind2←('SelectSnippets2@Select snippet',(multiple/'s'),' ',caption)multiple CommTools.Select names
+                 :If 0=≢ind2
+                     names←''
+                     indices←⍬
+                     msg←'Cancelled by user'
+                 :Else
+                     :If multiple
+                         names←{⍵↑⍨¯1+⍵⍳' '}¨names[,ind2]
+                         indices←snippetNamesFull⍳names
+                     :Else
+                         names←{⍵↑⍨¯1+⍵⍳' '}ind2⊃list2
+                         indices←snippetNamesFull⍳⊂names
+                     :EndIf
+                 :EndIf
+             :Else
+                 'Multiple hits, which are now allowed'Assert 0
+             :EndIf
+         :EndIf
      :EndIf
  :EndIf

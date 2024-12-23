@@ -1,7 +1,14 @@
  folder←GetSnippetsFolder;name;flag;oldFolder;res
 ⍝ Return the full path to (and including) .snippets in the user's home directory
+⍝ unless there is a variable ∆SNIPPET_FOLDER defined that points elsewhere.
+⍝ Then this variable is returned. This is for test cases only.
 ⍝ Has a side effect: creates the hosting folder in case it does not yet exist
- name←(1+'win'≡⎕C 3↑1⊃'.'⎕WG'aplversion')⊃'HOME' 'USERPROFILE'
- folder←FilesAndDirs.NormalizePath(2 ⎕NQ #'GetEnvironment'name),'/.snippets/'
- 1 ⎕MKDIR folder
+⍝ (not with ∆SNIPPET_FOLDER)
+ :If 0<⎕NC'∆SNIPPET_FOLDER'
+     folder←∆SNIPPET_FOLDER
+ :Else
+     name←(1+'win'≡⎕C 3↑1⊃'.'⎕WG'aplversion')⊃'HOME' 'USERPROFILE'
+     folder←FilesAndDirs.NormalizePath(2 ⎕NQ #'GetEnvironment'name),'/.snippets/'
+     1 ⎕MKDIR folder
+ :EndIf
 ⍝Done

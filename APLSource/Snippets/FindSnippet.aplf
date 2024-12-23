@@ -1,0 +1,8 @@
+ bool←FindSnippet this
+⍝ Sub-function of `CollectSnippetInfo` without independent value.
+⍝ Requires the two (semi-)globals `snippetNames` and `snippetNamesFull`
+ :If '.'∊this ⍝ Somthing like {name}.{extension}
+     bool←(⎕C snippetNamesFull)≡¨⊂⎕C this
+ :Else
+     bool←(⎕C snippetNames)≡¨⊂⎕C this
+ :EndIf

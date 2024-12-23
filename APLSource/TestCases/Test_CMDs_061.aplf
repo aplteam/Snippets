@@ -1,17 +1,18 @@
- R←Test_061(stopFlag batchFlag);⎕TRAP;res;res2
+ R←Test_CMDs_061(stopFlag batchFlag);⎕TRAP;res;res2;ref
 ⍝ ]Snippets.Fix on a variable
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
  Assert 0=⎕NC'MIT' ⍝ Must not exist of course
- ⎕SE.Snippets.CommTools.Select_Choices←1 2⍴'WhereToFix@' 2
+ ref←##.Snippets_UC.GetRefToSnippets ⍬
+ ref.CommTools.AddAutomation'Select' 'WhereToFix@' 2
  res←∆UCMD'Fix ''MIT'''
  →T.GoToTidyUp'Variable "MIT" assigned in "#.Snippets.TestCases"'≢res
  →T.GoToTidyUp 2≠⎕NC'MIT'
  ⎕EX'MIT'
 
  Assert 0=#.⎕NC'MIT' ⍝ Must not exist of course
- ⎕SE.Snippets.CommTools.Select_Choices←1 2⍴'WhereToFix@' 1
+ 1 ref.CommTools.AddAutomation'Select' 'WhereToFix@' 1
  res←∆UCMD'Fix ''MIT'''
  →T.GoToTidyUp'Variable "MIT" assigned in "#"'≢res
  →T.GoToTidyUp 0≠⎕NC'MIT'
@@ -22,5 +23,5 @@
 ∆TidyUp:
  ⎕EX'MIT'
  #.⎕EX'MIT'
- ⎕SE.Snippets.CommTools.Cleanup
+ ref.CommTools.Cleanup
 ⍝Done

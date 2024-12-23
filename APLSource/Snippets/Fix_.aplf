@@ -1,5 +1,5 @@
-  msg←sourceFile Fix_ ns;filenames;snippetNames;indices;names;parent;name;ind;caption;filename;i
- (filenames snippetNames indices names msg)←0 CollectSnippetInfo'to fix in the workspace'({0≡⍵:'' ⋄ ⍵}ns._1)sourceFile 1
+  msg←Fix_ ns;filenames;snippetNames;indices;names;parent;name;ind;caption;filename;i
+ (filenames snippetNames indices names msg)←0 CollectSnippetInfo'to fix in the workspace'({0≡⍵:'' ⋄ ⍵}ns._1) 1
  :If 'Cancelled by user'≢msg
      parent←''ns.Switch'target'
      :If 0<≢names

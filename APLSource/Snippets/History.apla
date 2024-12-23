@@ -1,7 +1,8 @@
 (
- '* 0.8.0 ⋄ 2024-12-23'
- '  * `Delete` did not work as expected when an argument was provided'
- '  * Packages updated '
+ '* 0.8.0 ⋄ 2024-12-24'
+ '  * `Delete` did not work as expected'
+ '  * Packages updated'
+ '  * A bug in `CollectSnippetInfo` could have resulted in the loss of data under some circumstances '
  '* 0.7.0 ⋄ 2024-11-28'
  '  * `Fix` now allows the specification of multiple APL objects'
  '  * Documentation polished'

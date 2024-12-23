@@ -1,4 +1,4 @@
- r←sourceFile Show_ ns;opCode;msg;name;filename;session;ref;body
+ r← Show_ ns;opCode;msg;name;filename;session;ref;body
  r←''
  (opCode r name filename)←'SelectSnippetForView@Please select snippet to be shown with ⎕ED'GetNameAndFilename ns
  :If 1=opCode

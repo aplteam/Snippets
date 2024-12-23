@@ -1,0 +1,12 @@
+ R←Test_SCI_030(stopFlag batchFlag);⎕TRAP;searchFor;filenames;snippetNames;indices;names;msg
+⍝ Search with a wildcard, resulting in a single hit
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ searchFor←'spli*'
+ (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ →T.PassesIf names≡,⊂'Split.code'
+ →T.PassesIf'Split.code'≡indices⊃snippetNames
+
+ R←T._OK
+⍝Done

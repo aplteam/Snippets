@@ -1,0 +1,18 @@
+ R←Test_SCI_032(stopFlag batchFlag);⎕TRAP;searchFor;filenames;snippetNames;indices;names;msg;ref;expected
+⍝ Search with a wildcard, resulting in multiple hits, of which one is selected
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ searchFor←'Hell*'
+ ref←##.Snippets_UC.GetRefToSnippets ⍬
+ ref.CommTools.AddAutomation'Select' 'SelectSnippets1@' 2
+ (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ expected←,⊂'Hello2.aplf'
+ →T.GoToTidyUp names≢expected
+ →T.GoToTidyUp expected≢snippetNames[indices]
+
+ R←T._OK
+
+∆TidyUp:
+ ref.CommTools.Cleanup
+⍝Done

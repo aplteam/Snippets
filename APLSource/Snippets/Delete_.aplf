@@ -1,11 +1,11 @@
- msg←sourceFile Delete_ ns;filenames;snippetNames;ind;name;msg;txt;CR
- txt←''ns.Switch ns._1
- (filenames snippetNames ind name msg)←CollectSnippetInfo'to be deleted'txt sourceFile
+ msg←Delete_ ns;filenames;snippetNames;ind;name;msg;txt;CR;bool
+ txt←{0≡⍵:'' ⋄ ⍵}ns._1
+ (filenames snippetNames ind name msg)←CollectSnippetInfo'to be deleted'txt
  :If 0<≢name
-     :If FilesAndDirs.DeleteFile filenames[ind]
-         msg←'Snippet deleted: ',name
+     :If ∧/bool←FilesAndDirs.DeleteFile filenames[ind]
+         msg←'Snippet deleted: ',⊃{⍺,',',⍵}/⊆name
      :Else
          CR←⎕UCS 13
-         msg←'Something went wrong, could not delete: ',CR,⊃{⍺,CR,⍵}/filenames[ind]
+         msg←'Something went wrong, could not delete: ',CR,⊃{⍺,CR,⍵}/(~bool)/filenames[ind]
      :EndIf
  :EndIf

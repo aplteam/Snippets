@@ -1,11 +1,13 @@
- R←Test_063(stopFlag batchFlag);⎕TRAP;res;res2
+ R←Test_CMDs_063(stopFlag batchFlag);⎕TRAP;res;res2;ref
 ⍝ ]Snippets.Fix function, variable and script all in one go
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
  ⎕EX¨'QuadVars' 'MIT'
  Assert 0=+/⊃∘⎕NC¨'QuadVars' 'MIT' ⍝ Must not exist of course
- ⎕SE.Snippets.CommTools.Select_Choices←1 2⍴'WhereToFix@' 2
+ ref←##.Snippets_UC.GetRefToSnippets ⍬
+ ref.CommTools.AddAutomation'Select' 'WhereToFix@' 2
+ ref.CommTools.AddAutomation'Select' 'SelectSnippets2@' 'a'
  res←∆UCMD'Fix QuadVars,MIT'
  →T.GoToTidyUp~∨/'Script "QuadVars" fixed in #.Snippets.TestCases'⍷∊res
  →T.GoToTidyUp~∨/'Variable "MIT" assigned in "#.Snippets.TestCases"'⍷∊res
@@ -17,5 +19,5 @@
 
 ∆TidyUp:
  ⎕EX¨'QuadVars' 'MIT'
- ⎕SE.Snippets.CommTools.Cleanup
+ ref.CommTools.Cleanup
 ⍝Done

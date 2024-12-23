@@ -1,0 +1,12 @@
+ R←Test_SCI_010(stopFlag batchFlag);⎕TRAP;searchFor;filenames;snippetNames;indices;names;msg
+⍝ Search for a fully qualified term with wrong uppercase/lowercase (must work anyway)
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ searchFor←'split.code'
+ (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ →T.PassesIf names≡,⊂'Split.code'
+ →T.PassesIf'Split.code'≡indices⊃snippetNames
+
+ R←T._OK
+⍝Done

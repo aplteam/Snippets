@@ -1,12 +1,13 @@
  Make flag;M;C;cfg;zipFilename;res;parms
-⍝ Version 1.0.1 from 2024-09-07
+⍝ Version 1.1.0 from 2024-12-23
  :If flag
      M←⎕SE.MakeHelpers
      C←##.CiderConfig
      cfg←M.GetPackageCfg C.HOME
      M.FetchLaterUserCommand cfg C('[MyUCMDs]')
+     cfg←M.EditVersion cfg
      parms←⎕SE.Tatin.CreateBuildParms C.HOME
-     parms.version←M.CompileVersionNumberPattern cfg
+     parms.version←cfg.version
      parms.targetPath←C.CIDER.distributionFolder
      M.RecreateFolder C.HOME,'/',C.CIDER.distributionFolder
      zipFilename←⎕SE.Tatin.BuildPackage parms

@@ -1,4 +1,4 @@
- r←sourceFile Run(Cmd Args);folder;⎕TRAP
+ r←Run(Cmd Args);folder;⎕TRAP
  r←0 0⍴''
  :If ''≡Args
      ⎕EX'Args'
@@ -7,21 +7,21 @@
  Args.CalledFrom←⊃(¯1+⎕XSI⍳⊂'⎕SE.UCMD')↓⎕NSI
  :Select ⎕C Cmd
  :Case ⎕C'List'
-     r←sourceFile List_ Args
+     r←List_ Args
  :Case ⎕C'Edit'
-     r←sourceFile Edit_ Args
+     r←Edit_ Args
  :Case ⎕C'Copy'
-     r←sourceFile Copy_ Args
+     r←Copy_ Args
  :Case ⎕C'Fix'
-     r←sourceFile Fix_ Args
+     r←Fix_ Args
  :Case ⎕C'Save'
      r←Save_ Args
  :Case ⎕C'Delete'
-     r←sourceFile Delete_ Args
+     r←Delete_ Args
  :Case ⎕C'Compare'
      r←Compare_ Args
  :Case ⎕C'Show'
-     r←sourceFile Show_ Args
+     r←Show_ Args
  :Case ⎕C'Help'
      r←Help_ Args
  :Case ⎕C'Version'

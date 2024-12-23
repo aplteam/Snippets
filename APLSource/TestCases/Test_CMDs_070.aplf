@@ -1,0 +1,13 @@
+ R←Test_CMDs_070(stopFlag batchFlag);⎕TRAP;res
+⍝ ]Snippets.Delete on a name without extension that results in a single hit
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ res←∆UCMD'Delete History'
+ →T.GoToTidyUp res≢'Snippet deleted: History.aplf'
+
+ R←T._OK
+
+∆TidyUp:
+ (##.Snippets.∆SNIPPET_FOLDER,'/')⎕NCOPY ##.CiderConfig.HOME,'/TestData/History.aplf'
+⍝Done

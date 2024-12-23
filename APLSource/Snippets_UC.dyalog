@@ -37,13 +37,12 @@
       :EndIf
     ∇
 
-    ∇ r←Run(cmd args);ref;sourceFile
+    ∇ r←Run(cmd args);ref
       r←''
-      sourceFile←##.SourceFile
       :If 9=⎕NC'⎕SE.Snippets'
           ref←GetRefToSnippets''
           :If 3=ref.⎕NC'Run'
-              r←sourceFile ref.Run(cmd args)
+              r←ref.Run(cmd args)
           :Else
               PrintError''
           :EndIf

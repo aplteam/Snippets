@@ -1,0 +1,13 @@
+ R←Test_SCI_020(stopFlag batchFlag);⎕TRAP;searchFor;filenames;snippetNames;indices;names;msg;expected
+⍝ Search for a term without wildcard and without extension, resulting in single hit
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ searchFor←'unzip'
+ (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ expected←,⊂'unzip.apla'
+ →T.PassesIf names≡expected
+ →T.PassesIf expected≡snippetNames[indices]
+
+ R←T._OK
+⍝Done
