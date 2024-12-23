@@ -1,4 +1,7 @@
 (
+ '* 0.8.0 ⋄ 2024-12-23'
+ '  * `Delete` did not work as expected when an argument was provided'
+ '  * Packages updated '
  '* 0.7.0 ⋄ 2024-11-28'
  '  * `Fix` now allows the specification of multiple APL objects'
  '  * Documentation polished'
