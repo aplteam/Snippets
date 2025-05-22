@@ -4,8 +4,6 @@
 
 A few bits are not implemented yet (notably the `]Snippets.Compare` command) but the basics work fine.
 
-I am keen to get feedback on this.
-
 ## Overview
 
 What are snippets?
@@ -22,7 +20,8 @@ Assert←{⍺←'' ⋄ (,1)≡,⍵:r←1 ⋄ ⎕ML←1 ⋄ ⍺ ⎕SIGNAL 1↓(�
 
 This certainly does not qualify as a package: there is no need for versioning or documentation, and no dependencies either.
 
-But you might use this piece of code frequently enough to make it available as a snippet, because this is not something that can easily be plugged into the keyboard on the fly, not to mention the possibility of a typo, making it a perfect example of a snippet.
+But you might use this piece of code frequently enough to make it available as a snippet, because this is not something that can easily be 
+plugged into the keyboard on the fly, not to mention the possibility of a typo, making it a perfect example of a snippet.
 
 The user command `]Snippets` allows you to create, list and inspect snippets, and get them into the workspace in one way or another.
 
@@ -78,9 +77,9 @@ Tell something
 ]Tatin.InstallPackages [tatin]Snippets [MyUCMDs]
 ```
 
-This will make the user commands of `Snippets` available. Note that `Snippets` does not offer an API.
+This will make the user commands of `Snippets` available. Note that it does not offer an API - its for interactive usee only.
 
 
 ## Storage location
 
-All snippets are saved in a folder `.snippets\` which is creates in the user's home folder.
+All snippets are saved in a folder `.snippets/` which is created in the user's home folder.
