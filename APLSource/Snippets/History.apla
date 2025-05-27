@@ -1,4 +1,6 @@
 (
+ '* 0.9.0 ⋄ 2025-05-27'
+ '  * Installation process revisited'
  '* 0.8.0 ⋄ 2024-12-24'
  '  * `Delete` did not work as expected'
  '  * Packages updated'

@@ -77,7 +77,10 @@ Tell something
 ]Tatin.InstallPackages [tatin]Snippets [MyUCMDs]
 ```
 
-This will make the user commands of `Snippets` available. Note that it does not offer an API - its for interactive usee only.
+This will make the user commands of `Snippets` available if there is a file `setup.dyalog` in your `[MyUCMDs]` folder executing the required steps.
+If that is not the case study this article on the APL wiki: <https://aplwiki.com/wiki/Dyalog_User_Commands>
+
+Note that the package `Snippets` does not offer an API - its for interactive use only.
 
 
 ## Storage location
