@@ -2,7 +2,7 @@
 ⍝ Creates an instance of the class `Tester2` named `T` and configures it.
 ⍝ Assumes that the project is handled by the project manager "Cider", and that there is
 ⍝ a namespace ##.CiderConfig available with the Cider config parameters.
-⍝ As a side effect is creates a folder "TestResults" in the project's root folder if the
+⍝ As a side effect it creates a folder "TestResults" in the project's root folder if the
 ⍝ user wants to do code coverage with the `CodeCoverage` class.
  ⎕IO←1 ⋄ ⎕ML←1
  :Trap 911
