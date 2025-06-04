@@ -14,6 +14,7 @@
  ref.AddAutomation'Select' 'SelectSnippets2@' 'Assert.aplf'
  res←∆UCMD'Copy Assert'
  buff←cl.Text
+ ⎕DL 0.01
  cl.Text←was
  →T.GoToTidyUp~0<≢buff
  →T.GoToTidyUp'Assert←'{⍺≢(≢⍺)↑⍵}buff

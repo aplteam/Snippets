@@ -3,17 +3,19 @@
 ⍝ It's just an interface that does not do anything by itself.
 ⍝ Version 0.3.0 ⋄ 2025-05-27 ⋄ Kai Jaeger
 
-    ∇ PrintError dummy;msg
+    ∇ {r}←PrintError dummy;msg
+      r←0
       msg←''
       :If 3=⎕NC'⎕SE.Snippets.Version'
           msg←' Snippets is not installed correctly. Please remove and install again.'
+          r←1
       :EndIf
       ⎕←msg
     ∇
 
     ∇ r←List;c
       r←⍬
-
+     
       c←⎕NS''
       c.Name←'List'
       c.Desc←'List all saved snippets'
@@ -92,7 +94,7 @@
           :If 3=ref.⎕NC'Help'
               r←level ref.Help cmd
           :Else
-              PrintError''
+              PrintError ⍬
           :EndIf
       :Else
           ⎕←'Snippets not found'
@@ -101,16 +103,15 @@
 
     ∇ r←Run(cmd args);ref
       r←''
-      :If 0=⎕NC'⎕SE.Snippets'
-     
+      :If 9=⎕NC'⎕SE.Snippets'
+          ref←GetRefToSnippets''
+          :If 3=ref.⎕NC'Run'
+              r←ref.Run(cmd args)
+          :Else
+              PrintError''
+          :EndIf
       :Else
           ⎕←'Snippets not found'
-      :EndIf
-      ref←GetRefToSnippets''
-      :If 3=ref.⎕NC'Run'
-          r←ref.Run(cmd args)
-      :Else
-          PrintError''
       :EndIf
     ∇
 

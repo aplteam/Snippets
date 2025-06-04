@@ -3,14 +3,14 @@
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  R←T._Failed
 
- 'Something is not right'Assert ⎕NEXISTS ##.Snippets.∆SNIPPET_FOLDER,'/History.aplf'
+ 'Something is not right'Assert ⎕NEXISTS ⎕SE.Snippets.∆SNIPPET_FOLDER,'/History.aplf'
  res←∆UCMD'Delete Hist*'
  →T.GoToTidyUp res≢'Snippet deleted: History.aplf'
  ⎕DL 0.2
- →T.GoToTidyUp 0≠⎕NEXISTS ##.Snippets.∆SNIPPET_FOLDER,'/History.aplf'
+ →T.GoToTidyUp 0≠⎕NEXISTS ⎕SE.Snippets.∆SNIPPET_FOLDER,'/History.aplf'
 
  R←T._OK
 
 ∆TidyUp:
- (##.Snippets.∆SNIPPET_FOLDER,'/')⎕NCOPY ##.CiderConfig.HOME,'/TestData/History.aplf'
+ (⎕SE.Snippets.∆SNIPPET_FOLDER,'/')⎕NCOPY ##.CiderConfig.HOME,'/TestData/History.aplf'
 ⍝Done

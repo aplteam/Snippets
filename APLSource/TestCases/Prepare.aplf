@@ -5,11 +5,14 @@
 ⍝ As a side effect it creates a folder "TestResults" in the project's root folder if the
 ⍝ user wants to do code coverage with the `CodeCoverage` class.
  ⎕IO←1 ⋄ ⎕ML←1
- :Trap 911
-     {}⎕SE.UCMD'Snippets.Version'
- :Else
-     {}⎕SE.UCMD'UReset'
- :EndTrap
+ :If 0=⎕SE.⎕NC'Snippets.Version_'
+     :Trap 0
+         {}⎕SE.UCMD'Snippets.Version'
+     :Else
+         {}⎕SE.UCMD'UReset'
+     :EndTrap
+ :EndIf
+ 'Snippets is not available as a user command'Assert 0<⎕SE.⎕NC'Snippets.Version_'
  T←⎕NEW Tester2 ⎕THIS
  testPath←##.CiderConfig.HOME,'/TestResults'
  testFilename←testPath,'/CodeCoverage'

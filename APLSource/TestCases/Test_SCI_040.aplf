@@ -4,7 +4,7 @@
  R←T._Failed
 
  searchFor←'Does-not-exist*'
- (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ (filenames snippetNames indices names msg)←⎕SE.Snippets.CollectSnippetInfo'to be deleted'searchFor
  →T.PassesIf 0=≢names
  →T.PassesIf 0=≢indices
  →T.PassesIf msg≡'No match found'

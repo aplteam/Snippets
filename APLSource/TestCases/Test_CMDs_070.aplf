@@ -9,5 +9,5 @@
  R←T._OK
 
 ∆TidyUp:
- (##.Snippets.∆SNIPPET_FOLDER,'/')⎕NCOPY ##.CiderConfig.HOME,'/TestData/History.aplf'
+ (⎕SE.Snippets.∆SNIPPET_FOLDER,'/')⎕NCOPY ##.CiderConfig.HOME,'/TestData/History.aplf'
 ⍝Done

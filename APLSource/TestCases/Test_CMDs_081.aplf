@@ -7,11 +7,11 @@
  ref.CommTools.AddAutomation'Select' 'SelectSnippets1@' 1
  res←∆UCMD'Delete Hell*'
  →T.GoToTidyUp res≢'Snippet deleted: Hello1.aplf'
- →T.GoToTidyUp 0≠+/⎕NEXISTS ##.Snippets.∆SNIPPET_FOLDER,'/Hello1.aplf'
+ →T.GoToTidyUp 0≠+/⎕NEXISTS ⎕SE.Snippets.∆SNIPPET_FOLDER,'/Hello1.aplf'
 
  R←T._OK
 
 ∆TidyUp:
- (##.Snippets.∆SNIPPET_FOLDER,'/')⎕NCOPY ##.CiderConfig.HOME,'/TestData/Hello1.aplf'
+ (⎕SE.Snippets.∆SNIPPET_FOLDER,'/')⎕NCOPY ##.CiderConfig.HOME,'/TestData/Hello1.aplf'
  ref.CommTools.Cleanup
 ⍝Done

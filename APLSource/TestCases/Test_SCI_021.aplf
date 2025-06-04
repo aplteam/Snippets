@@ -6,7 +6,7 @@
  searchFor←'Version'
  ref←##.Snippets_UC.GetRefToSnippets ⍬
  ref.CommTools.AddAutomation'Select' 'SelectSnippets2@' 'a'
- (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ (filenames snippetNames indices names msg)←⎕SE.Snippets.CollectSnippetInfo'to be deleted'searchFor
  expected←'Version.aplf' 'Version.code'
  →T.GoToTidyUp names≢expected
  →T.GoToTidyUp expected≢snippetNames[indices]

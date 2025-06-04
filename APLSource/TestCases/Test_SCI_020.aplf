@@ -4,7 +4,7 @@
  R←T._Failed
 
  searchFor←'unzip'
- (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ (filenames snippetNames indices names msg)←⎕SE.Snippets.CollectSnippetInfo'to be deleted'searchFor
  expected←,⊂'unzip.apla'
  →T.PassesIf names≡expected
  →T.PassesIf expected≡snippetNames[indices]
