@@ -6,7 +6,7 @@
  searchFor←'Hell*'
  ref←##.Snippets_UC.GetRefToSnippets ⍬
  ref.CommTools.AddAutomation'Select' 'SelectSnippets1@' 'a'
- (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ (filenames snippetNames indices names msg)←⎕SE.Snippets.CollectSnippetInfo'to be deleted'searchFor
  expected←'Hello1.aplf' 'Hello2.aplf' 'Hello3.aplf'
  →T.GoToTidyUp names≢expected
  →T.GoToTidyUp expected≢snippetNames[indices]

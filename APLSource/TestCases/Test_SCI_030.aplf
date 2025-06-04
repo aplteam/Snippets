@@ -4,7 +4,7 @@
  R←T._Failed
 
  searchFor←'spli*'
- (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ (filenames snippetNames indices names msg)←⎕SE.Snippets.CollectSnippetInfo'to be deleted'searchFor
  →T.PassesIf names≡,⊂'Split.code'
  →T.PassesIf'Split.code'≡indices⊃snippetNames
 

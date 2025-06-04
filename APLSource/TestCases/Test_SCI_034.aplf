@@ -6,10 +6,10 @@
  searchFor←'Hell*'
  ref←##.Snippets_UC.GetRefToSnippets ⍬
  ref.CommTools.AddAutomation'Select' 'SelectSnippets1@' 'q'
- (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor
+ (filenames snippetNames indices names msg)←⎕SE.Snippets.CollectSnippetInfo'to be deleted'searchFor
  →T.GoToTidyUp 0≠≢names
  →T.GoToTidyUp 0≠≢indices
-  →T.GoToTidyUp msg≢'Cancelled by user'
+ →T.GoToTidyUp msg≢'Cancelled by user'
 
  R←T._OK
 

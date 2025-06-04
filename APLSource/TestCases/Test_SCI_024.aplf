@@ -8,7 +8,7 @@
  ref←##.Snippets_UC.GetRefToSnippets ⍬
  ref.CommTools.AddAutomation'Select' 'SelectSnippets2@' 'a'
  :Trap 11
-     (filenames snippetNames indices names msg)←##.Snippets.CollectSnippetInfo'to be deleted'searchFor allowMultiple
+     (filenames snippetNames indices names msg)←⎕SE.Snippets.CollectSnippetInfo'to be deleted'searchFor allowMultiple
      →T.GoToTidyUp 1
  :Else
      qdmx←⎕DMX

@@ -1,2 +1,9 @@
  Cleanup
- ⎕SE.Snippets.⎕EX'DEVELOPMENT'
+ :If ¯1=∆DEVELOPMENTwas
+     ⍝ It was undefined, therefore it's deleted
+     ⎕SE.Snippets.⎕EX'DEVELOPMENT'
+ :Else
+     ⎕SE.Snippets.DEVELOPMENT←∆DEVELOPMENTwas
+ :EndIf
+ {}FilesAndDirs.RmDirByForce ⎕SE.Snippets.∆SNIPPET_FOLDER
+⍝Done
