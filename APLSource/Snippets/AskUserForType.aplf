@@ -1,0 +1,9 @@
+ extension←AskUserForType dummy;list;ind
+⍝ Asks the user what type it is and returns the fitting extension
+ extension←''
+ list←'Function' 'Operator' 'Variable' 'Class' 'Namespace script' 'Interface' 'Code snippet',[1.5]'.aplf' '.aplo' '.apla' '.aplc' '.apln' '.apli' '.code'
+ ind←'AskUserForType@What is the type of the code on the clipboard?'CommTools.Select list[;1]
+ :If 0<≢ind
+     extension←⊃list[ind;2]
+ :EndIf
+⍝Done
