@@ -10,6 +10,7 @@
  res←∆UCMD'Fix ''Initialize_tatin_package'''
  →T.GoToTidyUp'Function "Initialize" fixed in #.Snippets.TestCases; Added: #.Snippets.TestCases.Initialize'≢res
  →T.GoToTidyUp 3≠⎕NC'Initialize'
+ ⎕DL 0.2
  ⎕SE.Link.Expunge'Initialize'
 
  Assert 0=#.⎕NC'Initialize' ⍝ Must not exist of course

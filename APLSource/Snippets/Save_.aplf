@@ -1,9 +1,9 @@
  msg←Save_ ns;cl;body;name;extension;filename;ref;qdmx;q;parent;nc;name_
  :If 0=≢ns.Arguments
      'cl'⎕WC'Clipboard'
-     body←⊆cl.Text
+     body←cl.Text
      :If 0=≢name←''ns.Switch'name'
-         name←({ns←⎕NS'' ⋄ 0=ns.⎕NC ⍵:1 ⋄ ⎕←'Please enter a valid APL name' ⋄ 0}CommTools.AskForText)'name@Specify the name of the snippet'
+         name←({ns←⎕NS'' ⋄ 0=ns.⎕NC ⍵:1 ⋄ ⎕←'Please enter a valid APL name' ⋄ 0}CommTools.AskForText)'SnippetName@Specify the name of the snippet'
      :EndIf
      :If 0=≢name
          msg←'Cancelled by user' ⋄ →0
@@ -53,8 +53,12 @@
      :If nc∊2 3 4
          extension←(2 3 4⍳nc)⊃'.apla' '.aplf' '.aplo'
      :ElseIf nc=0
-         extension←'.code'
-         body←∊body
+         :If 0=≢extension←AskUserForType ⍬
+             msg←'Cancelled by user' ⋄ →0
+         :EndIf
+         :If '.code'≡extension
+             body←∊body
+         :EndIf
      :Else
          nc←parent.⎕NC⊂name
          extension←(9.1 9.4 9.5⍳nc)⊃'.apln' '.aplc' '.apli'
@@ -82,5 +86,5 @@
          msg←qdmx.EM{0=≢⍵:⍺ ⋄ ⍵}qdmx.Message ⋄ →0
      :EndTrap
      (⊂body)FilesAndDirs.NPUT filename
-     msg←'Code snippet successfully saved as ',⊃,/1↓⎕NPARTS filename
+     msg←'Snippet successfully saved as ',⊃,/1↓⎕NPARTS filename
  :EndIf

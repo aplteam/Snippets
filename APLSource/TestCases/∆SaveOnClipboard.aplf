@@ -1,0 +1,4 @@
+ ∆SaveOnClipboard text;cl
+ cl←⎕NEW⊂'Clipboard'
+ ⎕DL 0.01
+ cl.Text←text

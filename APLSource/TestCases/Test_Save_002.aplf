@@ -1,0 +1,24 @@
+ R←Test_Save_002(stopFlag batchFlag);⎕TRAP;res;expected
+⍝ ]Snippets.Save for a function via clipboard
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ R←T._Failed
+
+ :If 'Win'≢APLTreeUtils2.GetOperatingSystem ⍬
+     R←T._WindowsOnly ⋄ →0
+ :EndIf
+
+ ∆SaveOnClipboard'r←x Plus y' 'r←x+y' '⍝Done'
+ ⎕SE.Snippets.CommTools.AddAutomation'AskForText' 'SnippetName@'(⊃⎕SI)
+ ⎕SE.Snippets.CommTools.AddAutomation'Select' 'AskUserForType@' 'Function'
+ res←∆UCMD'save'
+ expected←'Snippet successfully saved as ',(⊃⎕SI),'.aplf'
+ →T.GoToTidyUp expected≢res
+
+ R←T._OK
+
+∆TidyUp:
+ ⎕SE.Snippets.CommTools.Cleanup
+ res←∆UCMD'Delete ',⊃⎕SI
+ expected←'Snippet deleted: ',⊃⎕SI
+ 'Something is wrong!'Assert∨/expected⍷res
+⍝Done
